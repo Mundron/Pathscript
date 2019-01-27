@@ -2,6 +2,18 @@
 
 Ausfuehrliches README wird die naechsten Tage nachgereicht. Vorneweg schonmal so viel:
 
+Der Code kann bereits als Paket im Mudlet importiert werden. Damit es vollstaendig funktioniert, muss allerdings auch mein "evented navigation" (https://github.com/Mundron/Evented-Navigation) ebenfalls importiert werden (Reihenfolge egal)
+
+Und dann kann das Wegeskript auch gleich genutzt werden. Aber dazu muessen natuerlich erstmal Wege gespeichert werden.
+Die gespeicherten Wege befinden sich in einer externen Textdatei. Fuer diesen muesst ihr einmalig einen Pfad im Code eingeben.
+Schaut dabei zeu Skripte im Ordner "Mundron: Wegeskript" in das Element "Pathscript Core". Dort sollte in Zeile 10 sowas stehen wie:
+[...] directory="C:/Users/ [...]
+Hier muesst ihr natuerlich einen Pfad auf eurem PC eingeben, wo die Wege gespeichert werden sollen.
+
+Eines der Vorteile ist, dass ihr bei Verbesserung des Codes den alten Code einfach austauschen koennt und eure Wege dennoch alle gespeichert sind.
+Ich empfehle dennoch hin und wieder die Textdatei mit den Wegen zu kopieren und archivieren (ggf baue ich sowas auch noch spaeter ein, mal schauen)
+
+
 Mit dem Skript kann man zunaechst Wege speichern. Dazu muss man sich ein Zentrum im Spiel suchen. 
 Um Wege zwischen zwei Punkten zu haben, muss man immer einen Hin- und Rueckweg von den Punkten zum Zentrum speichern.
 
@@ -64,3 +76,11 @@ Startet die Aufzeichnung des Weges, inklusive Rueckweg!
 \#sweg pt mk h 
 
 Dies kann praktisch sein, wenn man fuers Metzeln sich einen Weg anlegen moechte, von dem man weiss, dass man ihn nachher nicht mehr braucht. Damit kann man sich die kurzen Namen fuer die wichtigen Punkte aufheben. Hier ist es auch sehr wichtig zu beachten, dass nach dem h noch ein Leerzeichen steht obwohl der Titel dahinter fehlt!
+
+### \#go <start?> <ziel>
+  Grundsaetzlich gibt es zwei Moeglichkeiten mit dem Wegeskript von einem Punkt zu einem anderen zu kommen.
+  1. Moeglichkeit:
+  Blindes Laufen mit \#go <start> <ziel> vom Punkt <start> nach Punkt <ziel>. Der gespeicherte Weg ueber das Zentrum wird abgelaufen, selbst wenn man sich nicht bei <start> befindet.
+  2. Moeglichkeit:
+  Automatisches Laufen mit \#go <ziel>. Dabei ermittelt der Wegeskript aus der Raum-ID, ob an dem Standort sich ein gespeicherter Punkt befindet. Falls dem so ist, dann laeuft man zum Punkt <ziel>. Befindet man sich aber in keinem gespeicherten Punkt, dann kommt nur eine Fehlermeldung. Dies hat nicht nur den Vorteil, dass man keinen Startraum angeben muss, sondern auch noch, dass der Wegeskript nicht blind laeuft und man moeglicherweise ein einem ungewuenschten Ort landet oder gar auf einem Weg stirbt. Jedoch gibt es auch Situationen, wo auch diese Moeglichkeit zu Problemen fuehrt, naemlich wenn der Charakter im Spiel erblindet ist. In dem Fall wird vom gmcp die Raum-Infos _nicht_ aktualisiert! Ist man also in einem gespeicherten Punkt erblindet, dann kann man zwar von diesem zu einem anderen Punkt noch laufen, aber da die Raumdaten nicht aktualisert sind, erkennt das Wegeskript dies nicht. Es wird also im neuen Punkt immer noch glauben, im alten Punkt zu sein. Wenn man von dort weiterlaufen will, wuerde man wieder blind laufen. In diesem Fall ist die 1. Moeglichkeit vorzuziehen, was aber auch voraussetzt selbst sicher zu wissen in welchem Raum man steht. Und falls man in einem Raum erblindet, welches kein gespeicherter Punkt ist,
+  dann kann man diese Funktion des Wegeskriptes gar nicht benutzen, solange man erblindet ist.
