@@ -33,3 +33,34 @@ Trick 4:
 Als Seher gibt es Portale und diese erlauben einfachere und kuerzere Wege. Man kann naemlich die "Portale" als Zentrum waehlen.
 Jeder Wege sollte also von naechsten Portel hin und zurueck fuehren. Allerdings muss man dann beachten, 
 dass jeder Weg mit einem Teleport-Befehle zum entsprechenden Portal beginnen muss!
+
+## Funktionen
+
+### \#wa <start|stop|weiter>
+Startet die Aufzeichnung des Weges, inklusive Rueckweg!
+
+### \#sweg <namen> <startpunkt> <ruecklaeufig> <titel>
+  Dieser Alias ist mehrere Funktionen. Hauptsaechlich geht es darum damit die aufgezeichneten Wege zu speichern.
+  Legt man zum Beispiel einen neuen Weg vom Zentrum nach Moulokin an und man moechte dem Punkt den Namen "mk" geben und den Titel "Eingang von Moulokin", dann waere der Befehl
+  
+  \#sweg mk  h Eingang von Moulokin
+  
+  Der Parameter <ruecklaeufig> dafuer da, wenn man zum Beispiel den Weg nicht vom Zentrum nach Moulokin aufgezeichnet hat, sondern von Moulokin gestartet ist und zum Zentrum gelaufen. Dann gibt man als diesen Parameter "z" an, ansonsten "h".
+  
+  Hier wurde als Startpunkt nichts eingegeben, weil es sich um einen Weg vom Zentrum aus handelt! Dennoch muessen die Leerzeichen fuer das Alias ausgehalten werden! Also zwei Leerzeichen zwischen mk und h!
+  (Man kann natuerlich auch mehrere Alias machen fuer die verschiedene Faelle, aber das ist mir etwas zu laestig...)
+  Wie beschrieben, wenn man den Weg von Moulokin aufzeichnet, dann waere der Alias
+  
+  \#sweg mk  z Eingang von Moulokin
+  
+  Im naechsten Beispiel wollen wir beim Polartiger vorm Eingang von Moulokin einen neuen Punkt speichern. Dann starten wir die Wegaufzeichnung im Raum, wo "mk" gespeichert wurde und laeuft zum Polartiger. Mit
+  
+  \#sweg pt mk h Polartiger nahe Moulokin
+  
+  wird der Weg von "mk" ausgehend bis zum Polartiger gespeichert. Man kann nun "pt" als eigenstaendigen Punkt ansehen und auch von diesem oder zu diesem reisen.
+  
+  Wenn man moechte, dann kann man mit diesem Alias auch Wege nur _temporaer_ speichern. Temporaer heisst hier, dass man den Weg benutzen kann, solange man mit dem Wegeskript nicht alle Wege neu laedt oder man den Client schliesst. Dies erreicht man, indem man den Titel einfach weglaesst, also zum Beispiel mit
+
+\#sweg pt mk h 
+
+Dies kann praktisch sein, wenn man fuers Metzeln sich einen Weg anlegen moechte, von dem man weiss, dass man ihn nachher nicht mehr braucht. Damit kann man sich die kurzen Namen fuer die wichtigen Punkte aufheben. Hier ist es auch sehr wichtig zu beachten, dass nach dem h noch ein Leerzeichen steht obwohl der Titel dahinter fehlt!
