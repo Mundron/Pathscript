@@ -51,7 +51,7 @@ dass jeder Weg mit einem Teleport-Befehle zum entsprechenden Portal beginnen mus
 ### \#wa <start|stop|weiter>
 Startet die Aufzeichnung des Weges, inklusive Rueckweg!
 
-### \#sweg <namen> <startpunkt> <ruecklaeufig> <titel>
+### \#sweg \<name\> \<startpunkt> \<ruecklaeufig> \<titel>
   Dieser Alias ist mehrere Funktionen. Hauptsaechlich geht es darum damit die aufgezeichneten Wege zu speichern.
   Legt man zum Beispiel einen neuen Weg vom Zentrum nach Moulokin an und man moechte dem Punkt den Namen "mk" geben und den Titel "Eingang von Moulokin", dann waere der Befehl
   
@@ -77,10 +77,10 @@ Startet die Aufzeichnung des Weges, inklusive Rueckweg!
 
 Dies kann praktisch sein, wenn man fuers Metzeln sich einen Weg anlegen moechte, von dem man weiss, dass man ihn nachher nicht mehr braucht. Damit kann man sich die kurzen Namen fuer die wichtigen Punkte aufheben. Hier ist es auch sehr wichtig zu beachten, dass nach dem h noch ein Leerzeichen steht obwohl der Titel dahinter fehlt!
 
-### \#go <start?> <ziel>
+### \#go <start?> \<ziel>
   Grundsaetzlich gibt es zwei Moeglichkeiten mit dem Wegeskript von einem Punkt zu einem anderen zu kommen.
   1. Moeglichkeit:
-  Blindes Laufen mit \#go <start> <ziel> vom Punkt <start> nach Punkt <ziel>. Der gespeicherte Weg ueber das Zentrum wird abgelaufen, selbst wenn man sich nicht bei <start> befindet.
+  Blindes Laufen mit \#go \<start> \<ziel> vom Punkt <start> nach Punkt \<ziel>. Der gespeicherte Weg ueber das Zentrum wird abgelaufen, selbst wenn man sich nicht bei \<start> befindet.
   2. Moeglichkeit:
-  Automatisches Laufen mit \#go <ziel>. Dabei ermittelt der Wegeskript aus der Raum-ID, ob an dem Standort sich ein gespeicherter Punkt befindet. Falls dem so ist, dann laeuft man zum Punkt <ziel>. Befindet man sich aber in keinem gespeicherten Punkt, dann kommt nur eine Fehlermeldung. Dies hat nicht nur den Vorteil, dass man keinen Startraum angeben muss, sondern auch noch, dass der Wegeskript nicht blind laeuft und man moeglicherweise ein einem ungewuenschten Ort landet oder gar auf einem Weg stirbt. Jedoch gibt es auch Situationen, wo auch diese Moeglichkeit zu Problemen fuehrt, naemlich wenn der Charakter im Spiel erblindet ist. In dem Fall wird vom gmcp die Raum-Infos _nicht_ aktualisiert! Ist man also in einem gespeicherten Punkt erblindet, dann kann man zwar von diesem zu einem anderen Punkt noch laufen, aber da die Raumdaten nicht aktualisert sind, erkennt das Wegeskript dies nicht. Es wird also im neuen Punkt immer noch glauben, im alten Punkt zu sein. Wenn man von dort weiterlaufen will, wuerde man wieder blind laufen. In diesem Fall ist die 1. Moeglichkeit vorzuziehen, was aber auch voraussetzt selbst sicher zu wissen in welchem Raum man steht. Und falls man in einem Raum erblindet, welches kein gespeicherter Punkt ist,
+  Automatisches Laufen mit \#go \<ziel>. Dabei ermittelt der Wegeskript aus der Raum-ID, ob an dem Standort sich ein gespeicherter Punkt befindet. Falls dem so ist, dann laeuft man zum Punkt \<ziel>. Befindet man sich aber in keinem gespeicherten Punkt, dann kommt nur eine Fehlermeldung. Dies hat nicht nur den Vorteil, dass man keinen Startraum angeben muss, sondern auch noch, dass der Wegeskript nicht blind laeuft und man moeglicherweise ein einem ungewuenschten Ort landet oder gar auf einem Weg stirbt. Jedoch gibt es auch Situationen, wo auch diese Moeglichkeit zu Problemen fuehrt, naemlich wenn der Charakter im Spiel erblindet ist. In dem Fall wird vom gmcp die Raum-Infos _nicht_ aktualisiert! Ist man also in einem gespeicherten Punkt erblindet, dann kann man zwar von diesem zu einem anderen Punkt noch laufen, aber da die Raumdaten nicht aktualisert sind, erkennt das Wegeskript dies nicht. Es wird also im neuen Punkt immer noch glauben, im alten Punkt zu sein. Wenn man von dort weiterlaufen will, wuerde man wieder blind laufen. In diesem Fall ist die 1. Moeglichkeit vorzuziehen, was aber auch voraussetzt selbst sicher zu wissen in welchem Raum man steht. Und falls man in einem Raum erblindet, welches kein gespeicherter Punkt ist,
   dann kann man diese Funktion des Wegeskriptes gar nicht benutzen, solange man erblindet ist.
