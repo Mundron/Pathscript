@@ -386,7 +386,6 @@ function updatePFWhenRoomChanges()
 		else
 			PF:warning("Rueckweg nachtragen!")
 		end
-		expandAlias("#zeigeweg 0")
 		PF.enterfrom=""
 	end
 end</script>
