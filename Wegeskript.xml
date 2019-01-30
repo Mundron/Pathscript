@@ -942,7 +942,7 @@ end</script>
 -------------------------------------------------
 
 function PF:load()
-  local weglinien = lines_from("C:/Users/Mundron/Documents/Morgengrauen/Einstellungen/Wege.txt")
+  local weglinien = lines_from(self.directory)
   local i = 1
   local titeltemp = ""
   local keytemp = ""
