@@ -1015,7 +1015,7 @@ function PF:save()
     end
     endindex = endindex + 1
   end
-  local f = io.open("C:/Users/Mundron/Documents/Morgengrauen/Einstellungen/Wege.txt", "w+")
+  local f = io.open(self.directory, "w+")
   
 	for i = 1, endindex, 1 do
     if self.titles[sortkeys[i]] then
