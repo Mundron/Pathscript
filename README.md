@@ -6,11 +6,37 @@ Das Skript selbst ist aber voll funktionstuechtig und kann bereits benutzt werde
 Dieses Skript ist in Lua fürs [Mudlet](https://www.mudlet.org/) geschrieben.
 Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud.de) erstellt, so dass gewisse Rahmenbedingungen erfuellt sein muessen, siehe Installation. Generell ist es aber auch auf andere Spiele uebertragbar.
 
-## Was ist das Wegeskript
+### Inhaltsverzeichnis
+
+1. Was ist das Wegeskript
+2. Installation
+3. Wie kann man das Wegeskript nutzen?
+4. Das Wegeskript wurde geupdatet. Muss ich nun wieder alle Punkte speichern um die neue Version zu nutzen?
+5. Wegaufzeichnung / Wie speichere ich Punkte fuer das Wegeskript?
+
+     5.1. Basispunkt
+
+     5.2. Wegaufzeichnung starten/stoppen/fortsetzen
+
+     5.3. Manuell Bewegungsaktion hinzufuegen
+
+     5.4. Anzeige des bisher aufgezeichneten Weges
+
+     5.5. Korrektur falsch eingegebener manueller Bewegungsaktionen
+
+     5.6. Punkt speichern
+     
+     5.7. Speichern nur des Hinweges oder nur des Rueckweges
+
+     5.8. Tipps/Tricks fuer effektive Wege
+
+6. Schnelles Reisen mit dem Wegeskript
+
+## 1. Was ist das Wegeskript
 
 Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punkten im Spiel. Es gibt sogar eine Syntax, bei der man nur das Ziel eingeben muss und das Skript automatisch erkennt, wenn man sich an einem gespeicherten Ort befindet um dann den Weg zum Ziel zu finden.
 
-## Installation
+## 2. Installation
 
 1. Man installiere mein ["evented navigation"](https://github.com/Mundron/Evented-Navigation):
 
@@ -31,7 +57,7 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
      Zwischen den Anfuehrungszeichen " " den Pfad eingeben, wo der Wegeskript die Wege speichern darf.
     
     
- ## Wie kann man das Wegeskript nutzen?
+ ## 3. Wie kann man das Wegeskript nutzen?
  
  Als erstes muessen natuerlich die Punkte im Spiel gespeichert werden zwischen denen man schnell reisen moechte.
  Dazu beeinhaltet das Wegeskript auch eine Wegaufzeichnung. Wenn wir zum Beispiel 10 Punkte im Spiel speichern wollen,
@@ -50,7 +76,7 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
  Das Wegeskript ist auch in der Lage zu erkennen, ob man sich an einem gespeicherten Punkt befindet, so dass man nur
  den Zielpunkt eingeben muss.
  
- ## Das Wegeskript wurde geupdatet. Muss ich nun wieder alle Punkte speichern um die neue Version zu nutzen?
+ ## 4. Das Wegeskript wurde geupdatet. Muss ich nun wieder alle Punkte speichern um die neue Version zu nutzen?
  
  Nein, das Wegeskript wurde bewusst so geschrieben, dass alle Wege in einer Textdatei im Arbeitsordner gespeichert werden.
  Wenn du die neue Version nutzen willst, dann musst du erstmal das alte Wegeskript vom Client loeschen. 
@@ -60,7 +86,7 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
  Anschliessend laedt man sich wieder Wegeskript.xml runter und installiert das Paket, wie oben bei Schritt 2 erklaert wurde.
  Ebenso muss Schritt 3 auch erneut ausgefuehrt werden. Die alten Wege sollten dann automatisch erkannt und geladen werden.
  
- ## Wegaufzeichnung / Wie speichere ich Punkte fuer das Wegeskript?
+ ## 5. Wegaufzeichnung / Wie speichere ich Punkte fuer das Wegeskript?
  
  Jede notwendige Bearbeitung verlaeuft im Skript. Die Aliase sind lediglich dafuer da um die entsprechenden Funktionen 
  im Spiel aufrufen zu koennen. Man startet die Wegaufzeichnung am Basispunkt und benutzt das Nummerfeld zur Bewegung.
@@ -82,14 +108,14 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
  kann die Wegaufzeichnung am zu speichernden Punkt startet und zum Basispunkt laufen. Dann uebergibt man beim Speichern
  einen weiteren Parameter, womit das Wegeskript die Wege richtig herum speichert.
  
- ### Basispunkt
+ ### 5.1. Basispunkt
  
  Der Basispunkt ist ein Bezugspunkt, der aber nicht gesondert gespeichert oder erwaehnt werden muss. Du musst fuer dich
  selbst bestimmen wo der Basispunkt sein soll. Was letztendlich gespeichert wird ist ein Hin- und Rueckweg zu einem Punkt.
  Der Wegeskript geht automatisch davon aus, dass der Rueckweg immer zu einem Basispunkt fuehrt. Deswegen ist es kein Problem
  in verschiedenen Gebieten auch unterschiedliche Basispunkte zu benutzen.
  
- ### Wegaufzeichnung starten/stoppen/fortsetzen
+ ### 5.2. Wegaufzeichnung starten/stoppen/fortsetzen
  
  Dazu kann man die Befehle
  
@@ -98,7 +124,7 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
          #wa weiter
  benutzen.
 
-### Manuell Bewegungsaktion hinzufuegen
+### 5.3. Manuell Bewegungsaktion hinzufuegen
 
 Mit
 
@@ -126,7 +152,7 @@ diesem einen Befehl machen.
         #zurueck betrete haus
         
 
-### Anzeige des bisher aufgezeichneten Weges
+### 5.4. Anzeige des bisher aufgezeichneten Weges
 
 Mit dem Befehl
 
@@ -139,7 +165,7 @@ Beispiel: \#zeigeweg 5
 
 Zeigt die letzten 5 gespeicherten Bewegungsaktionen.
 
-### Korrektur falsch eingegebener manueller Bewegungsaktionen
+### 5.5. Korrektur falsch eingegebener manueller Bewegungsaktionen
 
 Mit
 
@@ -152,19 +178,34 @@ Beispiel: \#lvor 3
 
 Loescht die letzten 3 Bewegungsaktionen vom Hinweg.
         
-### Punkt speichern
+### 5.6. Punkt speichern
 
 Hat man mit der Wegaufzeichnung den zu speichernden Weg abgelaufen, dann kann man folgende Befehle zum Speichern nutzen:
 
         #sweg <name>
         #sweg <name> <startpunkt>
-        #sweg <name> z
-        #sweg <name> <startpunkt> z
+        #sweg <name>-z
+        #sweg <name> <startpunkt>-z
         #sweg <name>:<titel>
         #sweg <name> <startpunkt>:<titel>
-        #sweg <name> z:<titel>
-        #sweg <name> <startpunkt> z:<titel>
+        #sweg <name>-z:<titel>
+        #sweg <name> <startpunkt>-z:<titel>
         
+ *WICHTIG:* Zwischen den Namen und dem Startpunkt muss ein Leerzeichen stehen, aber die Benutzung von -z oder :\<titel> 
+     muessen zwingend ohne Leerzeichen gemacht werden! Daher bitte genau auf die Syntax achten, siehe die Beispiele:
+     
+          #sweg sandtiger
+          #sweg polartiger moulokin
+          #sweg sandtiger-z
+          #sweg polartiger moulokin-z
+          #sweg sandtiger:Der Sandtiger beim Wettpalast am Westeingang von Port Vain
+          #sweg polartiger moulokin:Der Polartiger westlich von Moulokin
+          #sweg sandtiger-z:Der Sandtiger beim Wettpalast am Westeingang von Port Vain
+          #sweg polartiger moulokin:Der Polartiger westlich von Moulokin
+          
+  Generell ist zu empfehlen eher kurze Namen zu geben um diese schnell eingeben zu koennen. Fuer "Sandtiger" waere auch "st"
+  moeglich. Namen koennen eine beliebige Kombination aus Zahlen und Buchstaben sein.
+  
  Wie zu sehen ist, gibt es 4 verschiedene Parameter die man in allen Kombinationen an den Befehl weitergeben kann.
  Der Name muss aber immer dabei sein. Klar, der neue Punkt muss einen eindeutigen noch nicht benutzten Namen haben, 
  damit man benennen kann wohin man moechte. 
@@ -181,7 +222,37 @@ Hat man mit der Wegaufzeichnung den zu speichernden Weg abgelaufen, dann kann ma
  externen Textdatei gespeichert. Sollte man einen Weg temporaer gespeichert haben und dann doch beschliessen, diesen 
  dauerhaft speichern zu wollen, dann kann man dies noch nachholen indem man den Speicherbefehl erneut mit einem Titel eingibt.
  
-## Tipps/Tricks fuer effektive Wege
+ 
+### 5.7. Speichern nur des Hinweges oder nur des Rueckweges
+
+Es kann auch sein, dass notwendig ist, dass nur der Hinweg oder nur der Rueckweg gespeichert ist. Dies kann der Fall sein, 
+wenn man von durch irgendwas in einem Raum gelangt von der man zwar weg will, aber eigentlich nicht hinlaufen oder wenn man dort ist, vielleicht einen ganz anderen Weg fuer den Rueckweg braucht und daher beide Wege lieber getrennt aufnehmen will.
+Dazu starte man die Wegaufzeichnung wie gewohnt und lauft einmal den zu speichernden Weg entlang, wie oben beschrieben. 
+
+Nennen den Basispunkt B und einen interessanten Punkt X. Wenn wir nur den Hinweg, also den Weg von B nach X speichern wollen, 
+dann laufen starten wir mit der Wegaufzeichnung bei B und laufen nach X. Nun koennen wir folgende Befehle, aehnlich wie bei 5.6.
+zum Speichern des Hinweges benutzen:
+
+          #sebs <name>
+          #sebs <name> <startpunkt>
+          #sebs <name>:<titel>
+          #sebs <name> <startpunk>:<titel>
+          
+ Es gelten hier die selben Syntaxregeln, wie auch bei 5.6. Der Name "sebs" steht fuer "speichere Einbahnstrasse", 
+ da nur die eine Richtung gespeichert werden soll. Aber selbstverstaendlich kann sich jeder die Namen der Aliase anpassen
+ wie es besser gefaellt.
+ 
+ Wollen wir nur den Rueckweg festhalten, also den Weg von X nach B, dann starten wir die Wegaufzeichnung bei X und nehmen
+ den Weg nach B auf. Die Befehle zum Speichern sind die selben, nur dass noch der Parameter -z dazu kommt, also
+ 
+          #sebs <name>-z
+          #sebs <name> <startpunkt>-z
+          #sebs <name>-z:<titel>
+          #sebs <name> <startpunk>-z:<titel>
+ 
+ 
+ 
+### 5.8. Tipps/Tricks fuer effektive Wege
 
 Trick 1:
 Das Zentrum muss an sich erstmal nicht benannt werden. Es muessen nur alle Punkte einen Weg zum Zentrum hin und zurueck haben.
@@ -205,12 +276,34 @@ Jeder Wege sollte also von naechsten Portel hin und zurueck fuehren. Allerdings 
 dass jeder Weg mit einem Teleport-Befehle zum entsprechenden Portal beginnen muss!
 
 
-### Laufen zwischen gespeicherten Punkten!
+## 6. Schnelles Reisen mit dem Wegeskript
 
-## \#go <start?> \<ziel>
-  Grundsaetzlich gibt es zwei Moeglichkeiten mit dem Wegeskript von einem Punkt zu einem anderen zu kommen.
-  1. Moeglichkeit:
-  Blindes Laufen mit \#go \<start> \<ziel> vom Punkt <start> nach Punkt \<ziel>. Der gespeicherte Weg ueber das Zentrum wird abgelaufen, selbst wenn man sich nicht bei \<start> befindet.
-  2. Moeglichkeit:
-  Automatisches Laufen mit \#go \<ziel>. Dabei ermittelt der Wegeskript aus der Raum-ID, ob an dem Standort sich ein gespeicherter Punkt befindet. Falls dem so ist, dann laeuft man zum Punkt \<ziel>. Befindet man sich aber in keinem gespeicherten Punkt, dann kommt nur eine Fehlermeldung. Dies hat nicht nur den Vorteil, dass man keinen Startraum angeben muss, sondern auch noch, dass der Wegeskript nicht blind laeuft und man moeglicherweise ein einem ungewuenschten Ort landet oder gar auf einem Weg stirbt. Jedoch gibt es auch Situationen, wo auch diese Moeglichkeit zu Problemen fuehrt, naemlich wenn der Charakter im Spiel erblindet ist. In dem Fall wird vom gmcp die Raum-Infos _nicht_ aktualisiert! Ist man also in einem gespeicherten Punkt erblindet, dann kann man zwar von diesem zu einem anderen Punkt noch laufen, aber da die Raumdaten nicht aktualisert sind, erkennt das Wegeskript dies nicht. Es wird also im neuen Punkt immer noch glauben, im alten Punkt zu sein. Wenn man von dort weiterlaufen will, wuerde man wieder blind laufen. In diesem Fall ist die 1. Moeglichkeit vorzuziehen, was aber auch voraussetzt selbst sicher zu wissen in welchem Raum man steht. Und falls man in einem Raum erblindet, welches kein gespeicherter Punkt ist,
-  dann kann man diese Funktion des Wegeskriptes gar nicht benutzen, solange man erblindet ist.
+Es gibt zwei Moeglichkeiten das schnelle Reisen mit dem Wegeskript zu bedienen:
+
+1. Moeglichkeit:
+
+          #go <start> <ziel>
+  Dies ist ein *blindes Laufen* vom Punkt \<start> nach Punkt \<ziel>. 
+  Dabei arbeitet das Skript stur den Weg von \<start> zum Basispunkt und dann vom Basispunkt nach \<ziel> ab.
+  
+  
+2. Moeglichkeit:
+
+          #go <ziel>
+          
+  Dies ist ein automatisches Laufen. Dabei ermittelt der Wegeskript aus der Raum-ID, ob an dem Standort sich ein gespeicherter Punkt befindet. Falls dem so ist, dann laeuft man zum Punkt \<ziel>. Befindet man sich aber in keinem gespeicherten Punkt, dann kommt nur eine Fehlermeldung. 
+  
+  
+  Beide Moeglichkeiten haben ihre Vor- und Nachteile. Im Allgemeinen ist es schneller und einfacher die 2. Moeglichkeit 
+  zu benutzen, aber dieser kann auch in gewissen Situationen Probleme machen.
+  
+  Die 2. Moeglichkeit ist automatisiert. Wenn ein Weg richtig gespeichert ist, dann kann es nicht passieren, dass man den
+  Wegeskript in einem benachbarten Raum ausloest und man durch das sture Abarbeiten moeglicherweise in gefaehrliche Raeume 
+  rein laeuft. 
+  
+  Anderer setzt es voraus, dass das gmcp die Raum-ID richtig ausgibt. Dies ist meistens der Fall, aber nicht, wenn der 
+  Spielercharakter erblindet ist. In dem Fall werden die Raum-Informationen ab der Erblindung nicht mehr aktualisiert, 
+  selbst wenn man einen anderen Raum betritt. Erblindet man somit in einem nicht gespeichtern Punkt, dann wird das 
+  automatisierte Laufen nicht funktionieren, weil es den richtigen Raum nicht erkennen kann. Daher muss man altbewaehrt
+  sich zu einem gespeichtern Punkt orientieren und dann die 1. Moeglichkeit nutzen. Die Gefahr des Irrlaufens besteht 
+  natuerlich trotzdem, aber der Befehl wird dennoch unter diesen Umstaenden ausgefuehrt.
