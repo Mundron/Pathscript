@@ -5,7 +5,7 @@
 	<TimerPackage />
 	<AliasPackage>
 		<AliasGroup isActive="yes" isFolder="yes">
-			<name>Wege-Skript</name>
+			<name>Mundron: Wegeskript</name>
 			<script>-- Die alten tf-Wegeskripte.
 </script>
 			<command></command>
@@ -138,42 +138,60 @@ PF:save_back(matches[2])</script>
 				</Alias>
 				<Alias isActive="yes" isFolder="no">
 					<name>Weg speichern (nur eine Richtung)</name>
-					<script>-- alias sebs steht fuer "Speichere EinBahnStrasse"
+					<script>-- diese spezielle Form, dass fuer die Umkehrung der Parameter -z hinzugefuegt wird, ohne Leerzeichen
+-- und der Doppelpunkt vor dem Titel, kann man leicht unterscheiden, welche Argumente angegeben wurden.
+-- Zur Steuerung im Spiel ist das entspannter als fuer alle Faelle unterschiedliche Aliase zu definieren.
 
-local name=matches[2]
-local startpoint=matches[3]
-local ruecklaeufig=(matches[4]=="z")
-local titel = matches[5]
-
-PF:save_onedirection(name,startpoint,ruecklaeufig,titel)</script>
+if #matches==2 then
+	-- In diesem Fall ist es eine Eingabe der Form #sweg &lt;name&gt;
+	PF:save_onedirection(matches[2], "", false, "")
+elseif #matches==4 then
+	-- In diesem Fall ist es eine Eingabe #sweg &lt;name&gt; &lt;startpunkt&gt;
+	PF:save_onedirection(matches[2], matches[4], false, "")
+elseif #matches==5 then
+	-- In diesem Fall ist es eine Eingabe #sweg &lt;name&gt; &lt;startpunkt&gt;-z oder #sweg &lt;name&gt;-z
+	-- also Wege umkehren zur Speicherung
+	PF:save_onedirection(matches[2], matches[4], true, "")
+elseif #matches==7 then
+	-- In diesem Fall ist ein Titel mit angegeben und daher folgende Eingaben zusammengefasst:
+	-- #sweg &lt;name&gt;:&lt;Titel&gt;
+	-- #sweg &lt;name&gt; &lt;startpunkt&gt;:&lt;Titel&gt;
+	-- #sweg &lt;name&gt;-z:&lt;Titel&gt;
+	-- #sweg &lt;name&gt; &lt;startpunkt&gt;-z:&lt;Titel&gt;
+	PF:save_onedirection(matches[2], matches[4], matches[5]=="-z", "")
+end</script>
 					<command></command>
 					<packageName></packageName>
 					<regex>^#sebs (\w+)\s(\w*)\s(\w)\s(.*)$</regex>
 				</Alias>
 				<Alias isActive="yes" isFolder="no">
 					<name>Weg speichern (hin und zurueck)</name>
-					<script>local name=matches[2]
-local startpoint=matches[3]
-local ruecklaeufig=(matches[4]=="z")
-local titel = matches[5]
+					<script>-- diese spezielle Form, dass fuer die Umkehrung der Parameter -z hinzugefuegt wird, ohne Leerzeichen
+-- und der Doppelpunkt vor dem Titel, kann man leicht unterscheiden, welche Argumente angegeben wurden.
+-- Zur Steuerung im Spiel ist das entspannter als fuer alle Faelle unterschiedliche Aliase zu definieren.
 
--- siehe README:
--- Kurzbeispiele:
--- #sweg st  h Sandtiger
---			(Weg vom Zentrum zum Sandtiger mit Namen 'st')
--- #sweg brad st h Braddons Laden
---			(Weg vom Sandtiger nach Braddons Laden)
--- #sweg st  z Sandtiger
---			(Wegaufzeichnung verlaeuft vom Sandtiger zum Zentrum gespeichert,
---			 weswegen z der dritte Parameter sein muss)
--- #sweg drache st h
---			(Weg vom Sandtiger nach Drachenhoehle. Ohne Titel wird der Weg aber
---			 nur temporaer gespeichert, WICHTIG: Leerzeichen nach dem h!)
-
-PF:save_path(name,startpoint,ruecklaeufig,titel)</script>
+if #matches==2 then
+	-- In diesem Fall ist es eine Eingabe der Form #sweg &lt;name&gt;
+	PF:save_path(matches[2], "", false, "")
+elseif #matches==4 then
+	-- In diesem Fall ist es eine Eingabe #sweg &lt;name&gt; &lt;startpunkt&gt;
+	PF:save_path(matches[2], matches[4], false, "")
+elseif #matches==5 then
+	-- In diesem Fall ist es eine Eingabe #sweg &lt;name&gt; &lt;startpunkt&gt;-z oder #sweg &lt;name&gt;-z
+	-- also Wege umkehren zur Speicherung
+	PF:save_path(matches[2], matches[4], true, "")
+elseif #matches==7 then
+	-- In diesem Fall ist ein Titel mit angegeben und daher folgende Eingaben zusammengefasst:
+	-- #sweg &lt;name&gt;:&lt;Titel&gt;
+	-- #sweg &lt;name&gt; &lt;startpunkt&gt;:&lt;Titel&gt;
+	-- #sweg &lt;name&gt;-z:&lt;Titel&gt;
+	-- #sweg &lt;name&gt; &lt;startpunkt&gt;-z:&lt;Titel&gt;
+	PF:save_path(matches[2], matches[4], matches[5]=="-z", "")
+end
+</script>
 					<command></command>
 					<packageName></packageName>
-					<regex>^#sweg (\w+)\s(\w*)\s(\w)\s(.*)$</regex>
+					<regex>^#sweg (\w+)(\s(\w+))?(-z)?(:(.*))?$</regex>
 				</Alias>
 				<Alias isActive="yes" isFolder="no">
 					<name>Loesche Eingabe Rueckwaerts</name>
@@ -906,37 +924,45 @@ end</script>
 
 function PF:load()
   local weglinien = self:load_lines(self.filename)
-	if weglinien then
-    local i = 1
-    local titeltemp = ""
-    local keytemp = ""
-    self.titles = {}
-    self.pathes = {}
-  	self.ids = {}
-  	self.pathcounter=0
-    while i &lt; #weglinien + 1 do
-  		self.pathcounter = self.pathcounter+1
-      i = i + 1 -- Dekozeile ueber Titel ueberspringen
-      titeltemp = weglinien[i]
-      i = i + 2 -- Dekozeile unter Titel ueberspringen
-      keytemp = weglinien[i] -- Pfadname!
-  		i=i+1
-  		self.titles[keytemp] = titeltemp
-      while not (weglinien[i] == "begin") do
-  			self.ids[weglinien[i]]=keytemp -- hier ist ID der Key und der Pfadname der Value
-      	i = i+1
-  		end
-  		i = i + 1 -- Begin-Marker ueberspringen
-      self.pathes[keytemp] = {}
-      while not (weglinien[i] == "end") do
-        self.pathes[keytemp][#self.pathes[keytemp] + 1] = weglinien[i]
-        i = i + 1
+	self.titles = {}
+  self.pathes = {}
+  self.ids = {}
+  self.pathcounter=0
+  if weglinien then
+		if #weglinien&gt;1 then
+      local i = 1
+      local titeltemp = ""
+      local keytemp = ""
+      while i &lt; #weglinien + 1 do
+  			if #weglinien-i&lt;7 then
+  				self:error("In der Wege-Datei liegt ein Fehler vor!")
+  				break
+  			else
+      		self.pathcounter = self.pathcounter+1
+          i = i + 1 -- Dekozeile ueber Titel ueberspringen
+          titeltemp = weglinien[i]
+          i = i + 2 -- Dekozeile unter Titel ueberspringen
+          keytemp = weglinien[i] -- Pfadname!
+      		i=i+1
+      		self.titles[keytemp] = titeltemp
+          while not (weglinien[i] == "begin") do
+      			self.ids[weglinien[i]]=keytemp -- hier ist ID der Key und der Pfadname der Value
+          	i = i+1
+      		end
+      		i = i + 1 -- Begin-Marker ueberspringen
+          self.pathes[keytemp] = {}
+          while not (weglinien[i] == "end") do
+            self.pathes[keytemp][#self.pathes[keytemp] + 1] = weglinien[i]
+            i = i + 1
+          end
+          i = i + 1 -- End-Marker ueberspringen
+  			end
       end
-      i = i + 1 -- End-Marker ueberspringen
-    end
+		end
   	self:info("Alle "..self.pathcounter.." Wege geladen!")
 	else
-		self:error("Die Datei fuer die Wege '"..self.directory..self.filename..".txt' existiert nicht.")
+		self:save_lines(self.filename, {""})
+		self:warning("Die Datei fuer die Wege '"..self.filename..".txt' existiert nicht.\n Eine leere Datei zum Speichern der Wege wurde erstellt.")
 	end
 end
 
@@ -1029,10 +1055,10 @@ end
 -------------------------------------------------
 
 function PF:save_path(name, startpoint, backwards, title)
-  -- Name Wegpunkt Ruecklaufig T
+  -- Name Wegpunkt Ruecklaufig Titel
   if self.titles[name] then
     -- Faengt das ueberschreiben bereits existenter Wegpunkte ab
-    self:error("Wegkuerzel existiert bereits. Titel:\n" .. wegetitel[name])
+    self:error("Ein Weg mit dem Namen '"..name.."' existiert mit dem  Titel:\n" .. wegetitel[name])
 	elseif (backwards and self.ids[self.startid]) then
 		self:error("Der Pfad "..self.ids[self.startid].." endet bereits dort")
 	elseif self.ids[self.endid] then
