@@ -44,6 +44,10 @@ Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud
 
 9. Suchfunktion fuer die gespeichten Punkte (coming soon)
 
+10. Externe Speicherung der Wege mit automatischem monatlichen Backup (coming soon)
+
+11. Super-Safe-Modus (coming soon)
+
 ## 1. Was ist das Wegeskript
 
 Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punkten im Spiel. Es gibt sogar eine Syntax, bei der man nur das Ziel eingeben muss und das Skript automatisch erkennt, wenn man sich an einem gespeicherten Ort befindet um dann den Weg zum Ziel zu finden.
