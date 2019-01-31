@@ -32,6 +32,18 @@ Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud
 
 6. Schnelles Reisen mit dem Wegeskript
 
+7. Bearbeitung von gespeicherten Punkten (coming soon)
+
+     7.1. Namen aendern (coming soon)
+     
+     7.2. ID auslesen, hinzufuegen oder loeschen (coming soon)
+     
+     7.3. Titel aendern (coming soon)
+     
+8. Gespeichtern Punkt loeschen (coming soon)
+
+9. Suchfunktion fuer die gespeichten Punkte (coming soon)
+
 ## 1. Was ist das Wegeskript
 
 Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punkten im Spiel. Es gibt sogar eine Syntax, bei der man nur das Ziel eingeben muss und das Skript automatisch erkennt, wenn man sich an einem gespeicherten Ort befindet um dann den Weg zum Ziel zu finden.
@@ -307,3 +319,15 @@ Es gibt zwei Moeglichkeiten das schnelle Reisen mit dem Wegeskript zu bedienen:
   automatisierte Laufen nicht funktionieren, weil es den richtigen Raum nicht erkennen kann. Daher muss man altbewaehrt
   sich zu einem gespeichtern Punkt orientieren und dann die 1. Moeglichkeit nutzen. Die Gefahr des Irrlaufens besteht 
   natuerlich trotzdem, aber der Befehl wird dennoch unter diesen Umstaenden ausgefuehrt.
+  
+## 7. Bearbeitung von gespeicherten Punkten (coming soon)
+
+### 7.1. Namen aendern (coming soon)
+     
+###  7.2. ID auslesen, hinzufuegen oder loeschen (coming soon)
+     
+###  7.3. Titel aendern (coming soon)
+     
+## 8. Gespeichtern Punkt loeschen (coming soon)
+
+## 9. Suchfunktion fuer die gespeichten Punkte (coming soon)
