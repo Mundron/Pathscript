@@ -294,7 +294,8 @@ PF:retitle_path(matches[2],matches[3])</script>
 -------------------------------------------------
 
 
-PF = {directory="C:/Users/Mundron/Documents/Morgengrauen/Einstellungen/Wege.txt",
+PF = {directory="C:/Users/Mundron/Documents/Morgengrauen/Einstellungen/",
+			filename="Wege",
 			pathes={},
 			titles={},
 			ids={},
@@ -636,27 +637,6 @@ function PF:delete_path(path)
 end
 
 
-function PF:warning(text)
-	echo("\n\n\n")
-	decho("&lt;255,255,0:0,0,0&gt;WARNUNG: ")
-	echo(text)
-	echo("\n\n\n")
-end
-
-function PF:error(text)
-	echo("\n\n\n")
-	decho("&lt;255,155,0:0,0,0&gt;FEHLER: ")
-	echo(text)
-	echo("\n\n\n")
-end
-
-function PF:info(text)
-	echo("\n\n\n")
-	decho("&lt;120,170,255:0,0,0&gt;INFO: ")
-	echo(text)
-	echo("\n\n\n")
-end
-
 function PF:help()
 		self:info("Der Wegeskript hat folgende Befehle:")
 		echo("PF:init()\nPF:stop()\nPF:continue()\n")
@@ -744,223 +724,6 @@ end</script>
 -------------------------------------------------
 </script>
 				<eventHandlerList />
-				<Script isActive="yes" isFolder="no">
-					<name>load/save functions</name>
-					<packageName></packageName>
-					<script>-------------------------------------------------
---         Put your Lua functions here.        --
---                                             --
--- Note that you can also use external Scripts --
--------------------------------------------------
-
-function PF:load()
-  local weglinien = self:lines_from(self.directory)
-  local i = 1
-  local titeltemp = ""
-  local keytemp = ""
-  self.titles = {}
-  self.pathes = {}
-	self.ids = {}
-	self.pathcounter=0
-  while i &lt; #weglinien + 1 do
-		self.pathcounter = self.pathcounter+1
-    i = i + 1 -- Dekozeile ueber Titel ueberspringen
-    titeltemp = weglinien[i]
-    i = i + 2 -- Dekozeile unter Titel ueberspringen
-    keytemp = weglinien[i] -- Pfadname!
-		i=i+1
-		self.titles[keytemp] = titeltemp
-    while not (weglinien[i] == "begin") do
-			self.ids[weglinien[i]]=keytemp -- hier ist ID der Key und der Pfadname der Value
-    	i = i+1
-		end
-		i = i + 1 -- Begin-Marker ueberspringen
-    self.pathes[keytemp] = {}
-    while not (weglinien[i] == "end") do
-      self.pathes[keytemp][#self.pathes[keytemp] + 1] = weglinien[i]
-      i = i + 1
-    end
-    i = i + 1 -- End-Marker ueberspringen
-  end
-	self:info("Alle "..self.pathcounter.." Wege geladen!")
-end
-
-PF:load()
-
--------------------------------------------------
--- speichere Wege in Textdatei
--------------------------------------------------
-
-function PF:save()
-  -- zuerst werden die Keys alphanumerisch sortiert
-  local idinverse = {}
-	-- Tausche Key und Value beim wegeid
-	for key,value in pairs(self.ids) do
-		if idinverse[value] then
-			idinverse[value][#idinverse[value]+1]=key
-		else
-			idinverse[value]={key}
-		end
-	end
-	local sortkeys = {}
-  local endindex = 0
-  local eing = false
-  for key, value in pairs(self.pathes) do
-    eing = false
-    for i = 1, endindex, 1 do
-      -- Pruefe ob der neue Key in der Liste zwischen zwei
-      -- Keys einzufuegen ist.
-      eing = (key &lt; sortkeys[i])
-      if eing then
-        -- fuege neuen Key ein
-        for j = endindex, i, -1 do
-          sortkeys[j + 1] = sortkeys[j]
-        end
-        sortkeys[i] = key
-        break
-      end
-    end
-    if not eing then
-      -- Falls der neue Key nicht zwischen zwei Keys eingefuegt
-      -- wurde, dann fuege sie ans Ende an
-      sortkeys[endindex + 1] = key
-    end
-    endindex = endindex + 1
-  end
-  local f = io.open(self.directory, "w+")
-
-	for i = 1, endindex, 1 do
-    if self.titles[sortkeys[i]] then
-      f:write("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-      f:write(self.titles[sortkeys[i]] .. "\n")
-      f:write("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-      f:write(sortkeys[i] .. "\n")
-      if idinverse[sortkeys[i]] then
-				for j=1,#idinverse[sortkeys[i]],1 do
-					f:write(idinverse[sortkeys[i]][j].."\n")
-				end
-			else
-				f:write("\n")
-			end
-			f:write("begin\n")
-      for key, value in pairs(self.pathes[sortkeys[i]]) do
-        f:write(value .. "\n")
-      end
-      f:write("end\n")
-    end
-  end
-  f:close()
-  self:info("Alle " .. endindex .. " Wege wurden gespeichert!")
-end
-
--------------------------------------------------
--- speichere temporaeren/neuen Weg
--------------------------------------------------
-
-function PF:save_path(name, startpoint, backwards, title)
-  -- Name Wegpunkt Ruecklaufig T
-  if self.titles[name] then
-    -- Faengt das ueberschreiben bereits existenter Wegpunkte ab
-    self:error("Wegkuerzel existiert bereits. Titel:\n" .. wegetitel[name])
-	elseif (backwards and self.ids[self.startid]) then
-		self:error("Der Pfad "..self.ids[self.startid].." endet bereits dort")
-	elseif self.ids[self.endid] then
-		self:error("Der Pfad "..self.ids[self.endid].." endet bereits dort")
-	else
-		self.cpforth=self:simplifypath(self.cpforth)
-		self.cpforth = self:groupdirections(self.cpforth)
-
-		self.cpback=self:merge(self.cpback)
-		self.cpback=self:simplifypath(self.cpback)
-   	self.cpback = self:groupdirections(self.cpback)
-
-		if backwards then
-      if #startpoint &gt; 0 then
-        self.pathes[name] = {"#go " .. startpoint, unpack(self.cpback)}
-				table.insert(self.cpforth,"#go " .. startpoint .. "_z")
-        self.pathes[name .. "_z"] = self.cpforth
-      else
-        self.pathes[name] = self.cpback
-        self.pathes[name .. "_z"] = self.cpforth
-      end
-			self.ids[self.startid]=name
-    else
-		  if #startpoint &gt; 0 then
-        self.pathes[name] = {"#go " .. startpoint, unpack(self.cpforth)}
-				table.insert(self.cpback,"#go " .. startpoint .. "_z")
-        self.pathes[name .. "_z"] = self.cpback
-      else
-		    self.pathes[name] = self.cpforth
-        self.pathes[name .. "_z"] = self.cpback
-      end
-			self.ids[self.endid]=name
-    end
-    -- Falls Titel angegeben wird, dann wird der neue
-    -- Weg dauerhaft gespeichert
-    if #title &gt; 0 then
-      self.titles[name] = "~~~~~~~   " .. title
-      self.titles[name .. "_z"] = "~~~~~~~   " .. title .. " (Rueckweg)"
-      self:save()
-			self:info("Der neue Weg '"..name.."' wurde dauerhaft gespeichert.")
-			if self.super_safe then
-				self:save()
-			end
-    else
-      self:info("Weg '"..name.."'wurde nur temporaer gespeichert.")
-    end
-  end
-end
-
-function PF:save_onedirection(name, point, backwards, title)
-  -- Name Wegpunkt Ruecklaufig T
-  if self.titles[name] then
-    -- Faengt das ueberschreiben bereits existenter Wegpunkte ab
-    self:error("Wegkuerzel existiert bereits. Titel:\n" .. wegetitel[name])
-  else
-   	self:simplifypath(self.cpforth)
-		self.cpforth = self:groupdirections(self.cpforth)
-
-		if backwards then
-  		local temp={}
-
-  		for i=1,#self.cpforth,1 do
-  			temp[i]=self.cpforth[#self.cpforth-i+1]
-  		end
-  		self.cpback=temp
-		end
-
-    if backwards then
-      if #point &gt; 0 then
-				table.insert(self.cpforth, "#go " .. startpoint .. "_z")
-        self.pathes[name .. "_z"] = self.cpforth
-      else
-        self.pathes[name .. "_z"] = self.cpforth
-      end
-			self.ids[self.startid]=name
-    else
-      if #point &gt; 0 then
-        self.pathes[name] = {"#go " .. startpoint, unpack(self.cpforth)}
-      else
-        self.pathes[name] = self.cpforth
-      end
-    end
-    -- Falls Titel angegeben wird, dann wird der neue
-    -- Weg dauerhaft gespeichert
-    if #title &gt; 0 then
-      self.titles[name] = "~~~~~~~   " .. title
-      self.titles[name .. "_z"] = "~~~~~~~   " .. title .. " (Rueckweg)"
-      self:save()
-			self:info("Der neue Weg '"..name.."' wurde dauerhaft gespeichert.")
-			if self.super_safe then
-				self:save()
-			end
-    else
-      self:info("Der Weg '"..name.."' wurde nur temporaer gespeichert.")
-    end
-  end
-end</script>
-					<eventHandlerList />
-				</Script>
 				<Script isActive="yes" isFolder="no">
 					<name>functions for intern use</name>
 					<packageName></packageName>
@@ -1079,15 +842,293 @@ function PF:groupdirections(commands)
 	return result
 end
 
-function PF:lines_from(file)
-  if not file_exists(file) then
-    return {}
+
+function PF:file_exists(file)
+  local f = io.open(self.directory..file..".txt", "rb")
+  if f then
+    f:close()
+  end
+  return f ~= nil
+end
+
+function PF:load_lines(file)
+  if not self:file_exists(file) then
+    return nil
   end
   lines = {}
-  for line in io.lines(file) do
+  for line in io.lines(self.directory..file..".txt") do
     lines[#lines + 1] = line
   end
   return lines
+end
+
+function PF:save_lines(file,lines)
+
+	local f = io.open(self.directory..file..".txt", "w+")
+
+	for k,v in pairs(lines) do
+   f:write(v,"\n")
+  end
+  f:close()
+end
+
+
+function PF:warning(text)
+	echo("\n\n\n")
+	decho("&lt;255,255,0:0,0,0&gt;WARNUNG (Wegeskript): ")
+	echo(text)
+	echo("\n\n\n")
+end
+
+function PF:error(text)
+	echo("\n\n\n")
+	decho("&lt;255,155,0:0,0,0&gt;FEHLER (Wegeskript): ")
+	echo(text)
+	echo("\n\n\n")
+end
+
+function PF:info(text)
+	echo("\n\n\n")
+	decho("&lt;120,170,255:0,0,0&gt;INFO (Wegeskript): ")
+	echo(text)
+	echo("\n\n\n")
+end</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>load/save functions</name>
+					<packageName></packageName>
+					<script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
+-------------------------------------------------
+
+function PF:load()
+  local weglinien = self:load_lines(self.filename)
+	if weglinien then
+    local i = 1
+    local titeltemp = ""
+    local keytemp = ""
+    self.titles = {}
+    self.pathes = {}
+  	self.ids = {}
+  	self.pathcounter=0
+    while i &lt; #weglinien + 1 do
+  		self.pathcounter = self.pathcounter+1
+      i = i + 1 -- Dekozeile ueber Titel ueberspringen
+      titeltemp = weglinien[i]
+      i = i + 2 -- Dekozeile unter Titel ueberspringen
+      keytemp = weglinien[i] -- Pfadname!
+  		i=i+1
+  		self.titles[keytemp] = titeltemp
+      while not (weglinien[i] == "begin") do
+  			self.ids[weglinien[i]]=keytemp -- hier ist ID der Key und der Pfadname der Value
+      	i = i+1
+  		end
+  		i = i + 1 -- Begin-Marker ueberspringen
+      self.pathes[keytemp] = {}
+      while not (weglinien[i] == "end") do
+        self.pathes[keytemp][#self.pathes[keytemp] + 1] = weglinien[i]
+        i = i + 1
+      end
+      i = i + 1 -- End-Marker ueberspringen
+    end
+  	self:info("Alle "..self.pathcounter.." Wege geladen!")
+	else
+		self:error("Die Datei fuer die Wege '"..self.directory..self.filename..".txt' existiert nicht.")
+	end
+end
+
+PF:load()
+
+function PF:test_backup()
+	local last_backup = self:load_lines("pathscript_backup_date")
+	local to_backup=true
+	if last_backup then
+		to_backup=(tonumber(os.date("%y"))&lt;tonumber(last_backup[1]))
+		to_backup=(to_backup or tonumber(os.date("%m"))&lt;tonumber(last_backup[2]))
+	end
+	if to_backup then
+		self:save_lines(self.filename.."_backup_"..os.date("%y")..os.date("%m"),self:load_lines(self.filename))
+		self:save_lines("pathscript_backup_date", {os.date("%y"),os.date("%m")})
+		self:info("Ein Backup der Wege-Datei wurde erstellt.")
+	else
+		self:info(os.date("Das letzte Backup der Wege ist vom %B %Y"))
+	end
+end
+
+-------------------------------------------------
+-- speichere Wege in Textdatei
+-------------------------------------------------
+
+function PF:save()
+  -- zuerst werden die Keys alphanumerisch sortiert
+  local idinverse = {}
+	-- Tausche Key und Value beim wegeid
+	for key,value in pairs(self.ids) do
+		if idinverse[value] then
+			idinverse[value][#idinverse[value]+1]=key
+		else
+			idinverse[value]={key}
+		end
+	end
+	local sortkeys = {}
+  local endindex = 0
+  local eing = false
+  for key, value in pairs(self.pathes) do
+    eing = false
+    for i = 1, endindex, 1 do
+      -- Pruefe ob der neue Key in der Liste zwischen zwei
+      -- Keys einzufuegen ist.
+      eing = (key &lt; sortkeys[i])
+      if eing then
+        -- fuege neuen Key ein
+        for j = endindex, i, -1 do
+          sortkeys[j + 1] = sortkeys[j]
+        end
+        sortkeys[i] = key
+        break
+      end
+    end
+    if not eing then
+      -- Falls der neue Key nicht zwischen zwei Keys eingefuegt
+      -- wurde, dann fuege sie ans Ende an
+      sortkeys[endindex + 1] = key
+    end
+    endindex = endindex + 1
+  end
+  local temp={}
+
+	for i = 1, endindex, 1 do
+    if self.titles[sortkeys[i]] then
+      table.insert(temp,"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+      table.insert(temp,self.titles[sortkeys[i]])
+      table.insert(temp,"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+      table.insert(temp,sortkeys[i])
+      if idinverse[sortkeys[i]] then
+				for j=1,#idinverse[sortkeys[i]],1 do
+					table.insert(temp,idinverse[sortkeys[i]][j])
+				end
+			else
+				table.insert(temp,"\n")
+			end
+			table.insert(temp,"begin")
+      for key, value in pairs(self.pathes[sortkeys[i]]) do
+        table.insert(temp,value)
+      end
+      table.insert(temp,"end")
+    end
+  end
+  self:save_lines(self.filename, temp)
+  self:info("Alle " .. endindex .. " Wege wurden gespeichert!")
+end
+
+-------------------------------------------------
+-- speichere temporaeren/neuen Weg
+-------------------------------------------------
+
+function PF:save_path(name, startpoint, backwards, title)
+  -- Name Wegpunkt Ruecklaufig T
+  if self.titles[name] then
+    -- Faengt das ueberschreiben bereits existenter Wegpunkte ab
+    self:error("Wegkuerzel existiert bereits. Titel:\n" .. wegetitel[name])
+	elseif (backwards and self.ids[self.startid]) then
+		self:error("Der Pfad "..self.ids[self.startid].." endet bereits dort")
+	elseif self.ids[self.endid] then
+		self:error("Der Pfad "..self.ids[self.endid].." endet bereits dort")
+	else
+		self.cpforth=self:simplifypath(self.cpforth)
+		self.cpforth = self:groupdirections(self.cpforth)
+
+		self.cpback=self:merge(self.cpback)
+		self.cpback=self:simplifypath(self.cpback)
+   	self.cpback = self:groupdirections(self.cpback)
+
+		if backwards then
+      if #startpoint &gt; 0 then
+        self.pathes[name] = {"#go " .. startpoint, unpack(self.cpback)}
+				table.insert(self.cpforth,"#go " .. startpoint .. "_z")
+        self.pathes[name .. "_z"] = self.cpforth
+      else
+        self.pathes[name] = self.cpback
+        self.pathes[name .. "_z"] = self.cpforth
+      end
+			self.ids[self.startid]=name
+    else
+		  if #startpoint &gt; 0 then
+        self.pathes[name] = {"#go " .. startpoint, unpack(self.cpforth)}
+				table.insert(self.cpback,"#go " .. startpoint .. "_z")
+        self.pathes[name .. "_z"] = self.cpback
+      else
+		    self.pathes[name] = self.cpforth
+        self.pathes[name .. "_z"] = self.cpback
+      end
+			self.ids[self.endid]=name
+    end
+    -- Falls Titel angegeben wird, dann wird der neue
+    -- Weg dauerhaft gespeichert
+    if #title &gt; 0 then
+      self.titles[name] = "~~~~~~~   " .. title
+      self.titles[name .. "_z"] = "~~~~~~~   " .. title .. " (Rueckweg)"
+      self:save()
+			self:info("Der neue Weg '"..name.."' wurde dauerhaft gespeichert.")
+			if self.super_safe then
+				self:save()
+			end
+    else
+      self:info("Weg '"..name.."'wurde nur temporaer gespeichert.")
+    end
+  end
+end
+
+function PF:save_onedirection(name, point, backwards, title)
+  -- Name Wegpunkt Ruecklaufig T
+  if self.titles[name] then
+    -- Faengt das ueberschreiben bereits existenter Wegpunkte ab
+    self:error("Wegkuerzel existiert bereits. Titel:\n" .. wegetitel[name])
+  else
+   	self:simplifypath(self.cpforth)
+		self.cpforth = self:groupdirections(self.cpforth)
+
+		if backwards then
+  		local temp={}
+
+  		for i=1,#self.cpforth,1 do
+  			temp[i]=self.cpforth[#self.cpforth-i+1]
+  		end
+  		self.cpback=temp
+		end
+
+    if backwards then
+      if #point &gt; 0 then
+				table.insert(self.cpforth, "#go " .. startpoint .. "_z")
+        self.pathes[name .. "_z"] = self.cpforth
+      else
+        self.pathes[name .. "_z"] = self.cpforth
+      end
+			self.ids[self.startid]=name
+    else
+      if #point &gt; 0 then
+        self.pathes[name] = {"#go " .. startpoint, unpack(self.cpforth)}
+      else
+        self.pathes[name] = self.cpforth
+      end
+    end
+    -- Falls Titel angegeben wird, dann wird der neue
+    -- Weg dauerhaft gespeichert
+    if #title &gt; 0 then
+      self.titles[name] = "~~~~~~~   " .. title
+      self.titles[name .. "_z"] = "~~~~~~~   " .. title .. " (Rueckweg)"
+      self:save()
+			self:info("Der neue Weg '"..name.."' wurde dauerhaft gespeichert.")
+			if self.super_safe then
+				self:save()
+			end
+    else
+      self:info("Der Weg '"..name.."' wurde nur temporaer gespeichert.")
+    end
+  end
 end</script>
 					<eventHandlerList />
 				</Script>
@@ -1114,6 +1155,7 @@ end</script>
 function load_pathes_at_begin()
 	if not PF.loaded then
 		PF:load()
+		PF:test_backup()
 		PF.loaded=true
 	end
 end</script>
