@@ -283,7 +283,14 @@ PF:add_id(matches[2])</script>
 PF:retitle_path(matches[2],matches[3])</script>
 					<command></command>
 					<packageName></packageName>
-					<regex>^#retitle (.+) (.+)$</regex>
+					<regex>^#retitle (\w+) (.+)$</regex>
+				</Alias>
+				<Alias isActive="yes" isFolder="no">
+					<name>Zeige Raum-ID hier!</name>
+					<script>PF:info("Die Raum-ID von dem aktuellen Raum ist:\n"..gmcp.MG.room.info.id)</script>
+					<command></command>
+					<packageName></packageName>
+					<regex>^#raumid$</regex>
 				</Alias>
 			</AliasGroup>
 		</AliasGroup>
@@ -589,6 +596,9 @@ function PF:add_id(path)
 	if self.pathes[path] then
 		self.ids[gmcp.MG.room.info.id]=path
 		self:info("Die ID '"..gmcp.MG.room.info.id.."' wurde dem Weg '"..path.."' zugewiesen.")
+		if self.super_safe then
+			self:save()
+		end
 	else
 		self:error("Der Weg '"..path.."' existiert nicht.")
 	end
@@ -648,6 +658,9 @@ function PF:delete_path(path)
 				end
 			end
 			self:info("Der Weg '"..path.."' wurde nun dauerhaft geloescht! Wiederherstellung ist nicht mehr moeglich.")
+			if self.super_safe then
+  			self:save()
+  		end
 		end
 	else
 		self:error("Ein Weg mit dem Namen "..path.." existiert nicht.")
@@ -1097,8 +1110,7 @@ function PF:save_path(name, startpoint, backwards, title)
     if #title &gt; 0 then
       self.titles[name] = "~~~~~~~   " .. title
       self.titles[name .. "_z"] = "~~~~~~~   " .. title .. " (Rueckweg)"
-      self:save()
-			self:info("Der neue Weg '"..name.."' wurde dauerhaft gespeichert.")
+      self:info("Der neue Weg '"..name.."' wurde dauerhaft gespeichert.")
 			if self.super_safe then
 				self:save()
 			end
@@ -1146,8 +1158,7 @@ function PF:save_onedirection(name, point, backwards, title)
     if #title &gt; 0 then
       self.titles[name] = "~~~~~~~   " .. title
       self.titles[name .. "_z"] = "~~~~~~~   " .. title .. " (Rueckweg)"
-      self:save()
-			self:info("Der neue Weg '"..name.."' wurde dauerhaft gespeichert.")
+      self:info("Der neue Weg '"..name.."' wurde dauerhaft gespeichert.")
 			if self.super_safe then
 				self:save()
 			end
