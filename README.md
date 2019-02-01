@@ -286,10 +286,10 @@ so muss man nicht den gesamten Weg neu ablaufen! Man kann beim Speichern den and
 angeben, so dass der neue Punkt nur den Hin- und Rueckweg zum alten Punkt benoetigt.
 Allerdings wird das Skript trotzdem den Weg bis zum Zentrum zuruecklaufen. Dies ist jedoch so schnell, dass man es nicht merkt.
 
-Trick 4:
+Trick 4 (fuer Morgengrauen):
 Als Seher gibt es Portale und diese erlauben einfachere und kuerzere Wege. Man kann naemlich die "Portale" als Zentrum waehlen.
 Jeder Wege sollte also von naechsten Portel hin und zurueck fuehren. Allerdings muss man dann beachten, 
-dass jeder Weg mit einem Teleport-Befehle zum entsprechenden Portal beginnen muss!
+dass jeder Weg mit einem Teleport-Befehle zum entsprechenden Portal beginnen muss! Lies dazu noch 7.2., da bei dieser speziellen Form Raum-IDs nachgetragen werden muessen.
 
 
 ## 6. Schnelles Reisen mit dem Wegeskript
@@ -324,14 +324,119 @@ Es gibt zwei Moeglichkeiten das schnelle Reisen mit dem Wegeskript zu bedienen:
   sich zu einem gespeichtern Punkt orientieren und dann die 1. Moeglichkeit nutzen. Die Gefahr des Irrlaufens besteht 
   natuerlich trotzdem, aber der Befehl wird dennoch unter diesen Umstaenden ausgefuehrt.
   
-## 7. Bearbeitung von gespeicherten Punkten (coming soon)
+## 7. Bearbeitung von gespeicherten Punkten
 
-### 7.1. Namen aendern (coming soon)
+Natuerlich passiert es, dass man sich vertippt oder etwas an den Informationen, wie dem Namen, den IDs oder dem Titel was nachtraeglich aendern will. Dies ist auch moeglich.
+
+### 7.1. Namen aendern
+
+Der Befehl
+
+          #rename <old_name> <new_name>
+          
+ benennt den Punkt mit dem Namen \<old_name> in \<new_name> um. 
+ 
+ Zum Beispiel: \#rename sandtiger st
+ 
+ Benennt den gespeicherten Punkt "sandtiger" in den kuerzen Namen "st" um.
      
-###  7.2. ID auslesen, hinzufuegen oder loeschen (coming soon)
+###  7.2. ID auslesen, hinzufuegen oder loeschen
      
-###  7.3. Titel aendern (coming soon)
+Die Raum-ID wird normalerweise bei der Wegaufzeichnung mitgefuehrt und mitgespeichert. Dennoch kann es Vorteile haben mehr 
+als eine Raum-ID fuer einen gespeicherten Punkt zu hinterlegen. Zum Beispiel in der Situation von Trick 4 im Abschnitt 5.8..
+Denn die Portale als Basispunkt zu nehmen ist sehr praktisch, da man oft mit sehr kurzen Wegen arbeiten muss.
+In Morgengrauen muss man dann nur aufpassen, dass in den Para-Welten manche Portale auch nicht ungefaehrlich sind.
+Nun ist die Sache, dass man im Allgemeinen zwar den Basispunkt nicht irgendwie zu beachten braucht. Es muessen nur die Wege
+stets darueber fuehren. Als Seher kann es passieren, dass man an einem Portal steht und dann irgendwo hinreisen will. 
+Da gibt es zwei Moeglichkeiten. Entweder man markiert jedes Portal als ein Punkt mit einem *leeren* Weg. Man startet also die 
+Wegaufzeichnung am Portal und beendet diesen und speichert dannn den Weg. Das ist moeglich. 
+
+Ich persoenlich habe aber nur den Sandtiger als Punkt gespeichert, da man sich doch oft dort trifft, und dann die IDs von 
+allen anderen Portalen zum Punkt Sandtiger hinzugefuegt. Wenn ich also an einem Portal stehe und in mein Haus laufen will, 
+dann wird das Portal als Punkt Sandtiger erkannt. Da jedes Weg mit einem Teleport-Befehl beginnt, ist das aber egal, dass 
+ich dann vielleicht nicht wirklich am Sandtiger stehe, da der Weg funktioniert! 
+
+Natuerlich gibt es auch noch andere Moeglichkeiten mit mehr als einer ID zu einem Punkt zu arbeiten, wenn der Weg auch 
+von anderen Raeumen aus funktioniert. Daher kann man 
+
+               #zeigeids <namen>
+               
+sich anzeigen lassen, welche Raum-IDs an dem Punkt mit den Namen \<name> gespeichert wurden.
+ 
+Beispiel: \#zeigeids sandtiger
+ 
+Zeigt alle gespeicherten IDs, die dem Punkt "sandtiger" zugeordnet wurden. Natuerlich muss man auch abgleichen koennen, 
+wie die Raum-ID im dem Raum ist, in dem man sich befindet. Dazu kann man
+ 
+               #raumid
+               
+so ohne Argumente eingeben. Die Raum-ID wird im Spiel als Info angezeigt. Will man nun die ID des Raumes hinzufuegen in der 
+man sich gerade befindet, dann gibt man 
      
-## 8. Gespeichtern Punkt loeschen (coming soon)
+               #aid <name>
+               
+ein um die ID dem Punkt mit den Namen \<name> hinzuzufuegen.
+   
+Beispiel: \#aid sandtiger
+   
+Fuegt die aktuelle Raum-ID dem Punkt "sandtiger" hinzu.
+   
+Natuerlich kann es passieren, dass man sich dabei vertan hat und eine Raum-ID wieder loeschen will. Dazu laesst man 
+sich zuerst die IDs zum Punkt anzeigen. Die werden aufgelistet mit einer Nummer. Anschliessen kann man eine ID mit
+   
+               #lid <name> <nummer>
+   
+loeschen.
+   
+Beispiel: \#lid sandtiger 3
+   
+Loescht die 3. ID des Punktes namens "sandtiger".
+   
+###  7.3. Titel aendern
+
+Vielleicht hat man einen doofen Titel ausgewaehlt beim Speichern. Oder der Titel ist zu ungenau und man moechte zusaetzliche
+Informationen hinzufuegen? Dies ist mit dem Befehl
+
+               #retitel <name> <titel>
+               
+ erreichen. Dann wird dem Punkt \<name> der alte Titel durch \<titel> ersetzt.
+ 
+ Beispiel: \#retitel st Am Sandtiger von Port Vain
+ 
+ Ersetzt den alten Titel von "st" durch "Am Sandtiger von Port Vain"
+     
+## 8. Gespeichtern Punkt loeschen
+
+Vielleicht hat man sich bei einem Weg vertan oder etwas wurde was falsch gespeichert oder man hat andere Gruende einen
+gespeicherten Punkt wieder loeschen zu wollen. Um sicher zu gehen, dass man nicht verstehentlich einen falschen Punkt loescht,
+wird das Loeschen in zwei Stufen ausgefuehrt. Dazu verwendet man den Befehl
+
+               #loesche <name>
+               
+benutzen um den Punkt \<name> zu loeschen. Wenn man den Befehl einmal eingibt, dann wird erstmal nur der Titel geloescht.
+Damit zaehlt der Punkt als *temporaerer Punkt* (vergleiche 5.7.). Solange das Profil des Clients noch nicht geschlossen wird,
+kann man die Loeschung jederzeit rueckgaengig machen, indem man mit einen Titel wieder hinzufuegt. Das Hinzufuegen des Titels
+ist aber hier gleichbedeutend mit aendern des Titel. Das heisst, dass man mit \retitle \<name> \<titel> dem Punkt wieder einen
+Titel hinzufuegt. Tut man dies nicht, dann ist der Punkt mit dem Beenden des Profils endgueltig geloescht.
+
+Man kann aber jedoch auch darauf bestehen einen Punkt sofort entgueltig zu loeschen. Dazu gibt man den Loeschbefehl genauso
+ein zweites Mal ein und fertig.
+
+Beispiel 1:
+
+\#loesche st
+
+-- Löscht den Punkt st, zunaechst temporaer
+
+\#retitel st Am Sandtiger von Port Vain
+
+-- Fuegt dem Punkt st wieder einen Titel hinzu, womit die Loeschung rueckgaengig gemacht wurde.
+
+Beispiel 2:
+
+\#loesche st
+\#loesche st
+
+-- Löscht den Punkt st dauerhaft
 
 ## 9. Suchfunktion fuer die gespeichten Punkte (coming soon)
