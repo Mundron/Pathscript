@@ -477,4 +477,9 @@ Listet alle Namen mit Titel auf, wo der Titel d 'haus' beeinhaltet.
 
 ## 10. Externe Speicherung der Wege mit automatischem monatlichen Backup (coming soon)
 
+Fuer alle Faelle wird automatisch vom Wegeskript monatlich ein Backup der gespeicherten Wege erstellt. Dazu wird im 
+Arbeitsordnet erstellt. Der Name endet mit dem Jahr und dem Monat vom Backup. Ausserdem ist eine Datei dort erstellt, 
+welches festhaelt in welchem Monat zuletzt ein Backup erstellt wurde. Jedes Mal beim Starten des Profils wird geprueft ob
+in diesem Monat ein Backup besteht und falls nicht, wird es erstellt. 
+
 ## 11. Super-Safe-Modus (coming soon)
