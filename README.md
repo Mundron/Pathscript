@@ -1,8 +1,5 @@
 # Wegeskript
 
-Dieses README ist noch nicht vollstaendig. Im Laufe der kommenden Tage werde ich es nach und nach bearbeiten.
-Das Skript selbst ist aber voll funktionstuechtig und kann bereits benutzt werden. Zum Teil gibt es auch Erklaerungen im Code.
-
 Dieses Skript ist in Lua fürs [Mudlet](https://www.mudlet.org/) geschrieben.
 Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud.de) erstellt, so dass gewisse Rahmenbedingungen erfuellt sein muessen, siehe Installation. Generell ist es aber auch auf andere Spiele uebertragbar.
 
@@ -44,9 +41,10 @@ Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud
 
 9. Suchfunktion fuer die gespeichten Punkte
 
-10. Externe Speicherung der Wege mit automatischem monatlichen Backup (coming soon)
+10. Externe Speicherung der Wege mit automatischem monatlichen Backup
 
-11. Super-Safe-Modus (coming soon)
+11. Super-Safe-Modus
+
 
 ## 1. Was ist das Wegeskript
 
@@ -475,11 +473,36 @@ Beispiel 2:
      
 Listet alle Namen mit Titel auf, wo der Titel d 'haus' beeinhaltet.
 
-## 10. Externe Speicherung der Wege mit automatischem monatlichen Backup (coming soon)
+## 10. Externe Speicherung der Wege mit automatischem monatlichen Backup
 
 Fuer alle Faelle wird automatisch vom Wegeskript monatlich ein Backup der gespeicherten Wege erstellt. Dazu wird im 
 Arbeitsordnet erstellt. Der Name endet mit dem Jahr und dem Monat vom Backup. Ausserdem ist eine Datei dort erstellt, 
 welches festhaelt in welchem Monat zuletzt ein Backup erstellt wurde. Jedes Mal beim Starten des Profils wird geprueft ob
 in diesem Monat ein Backup besteht und falls nicht, wird es erstellt. 
 
-## 11. Super-Safe-Modus (coming soon)
+Moechte man einen Backup benutzen statt der aktuellen Datei, dann muss man dies manuell tun. Dazu loescht man im 
+Arbeitsordner die Datei *Wege.txt* und sucht sich das Backup aus, welches man benutzen wird. Diese benennt man dann 
+in *Wege.txt* um.
+
+Im Normalfall wird es wahrscheinlich nicht notwendig sein ein Backup zu benutzen. Moechte man dies nicht haben,
+dann schaut man nach der Installation bei den Skripten im Ordner "waiting for events" im Element "load_pathes_at_beginn".
+Die Zeile
+
+     PF:test_backup()
+     
+muss dann einfach nur geloescht werden (dies sollte Zeile 10 sein).
+
+## 11. Super-Safe-Modus
+
+Normalerweise werden beim Start des Profils die ganzen Wege geladen und beim Beenden werden die ganzen Wege gespeichert.
+Aber falls der Client abstuerzen sollte, dann gehen die Veraenderungen seit dem Start verloren.
+
+Und dafuer gibt es den "Super-Safe-Modus", der lediglich besagt, dass bei jeder Veraenderung auch automatisch alles in 
+der externen Textdatei gespeichert wird. Also beim Erstellen eines neuen Punktes, beim Aendern der Informationen eines 
+Punktes, sei es Name, Titel oder ID.
+
+Standardmaessig ist der Modus eingeschaltet. Man kann dies bei Skripte im Element "Core" in der Zeile
+
+               super_save=true}
+               
+(Zeiel 25) aendern, indem man *true* durch *false* ersetzt.
