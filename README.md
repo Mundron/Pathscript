@@ -32,17 +32,17 @@ Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud
 
 6. Schnelles Reisen mit dem Wegeskript
 
-7. Bearbeitung von gespeicherten Punkten (coming soon)
+7. Bearbeitung von gespeicherten Punkten
 
-     7.1. Namen aendern (coming soon)
+     7.1. Namen aendern
      
-     7.2. ID auslesen, hinzufuegen oder loeschen (coming soon)
+     7.2. ID auslesen, hinzufuegen oder loeschen
      
-     7.3. Titel aendern (coming soon)
+     7.3. Titel aendern
      
-8. Gespeichtern Punkt loeschen (coming soon)
+8. Gespeichtern Punkt loeschen
 
-9. Suchfunktion fuer die gespeichten Punkte (coming soon)
+9. Suchfunktion fuer die gespeichten Punkte
 
 10. Externe Speicherung der Wege mit automatischem monatlichen Backup (coming soon)
 
@@ -144,13 +144,15 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
 
 Mit
 
-        #vor <aktion>
+               #vor <aktion>
         
 gibt man manuell die Bewegungsaktion <aktion> an die Wegaufzeichnung weiter UND gleichzeitig wird dieser auch ausgefuehrt.
 Damit braucht nicht die Aktion zur Bewegung eingeben und es an die Wegaufzeichnung weitergeben, sondern man kann beides mit 
 diesem einen Befehl machen.
   
-  Beispiel: \#vor betrete haus
+  Beispiel: 
+  
+     #vor betrete haus
  
   
   Damit wir die Aktion "betrete haus" ausgefuehrt und an die Wegaufzeichnung weiter gegeben.
@@ -158,26 +160,28 @@ diesem einen Befehl machen.
   
   Fuer den Rueckweg benutzt man in dem Raum den Befehl
   
-        #zurueck <aktion>
+               #zurueck <aktion>
   
   Im Gegensatz zum Hinweg wird bei dieser Befehl die Aktion _NICHT_ ausgefuehrt. Wenn mehrere Aktionen fuer den Rueckweg 
   noetig sind, dann muss man sie in der Reihenfolge eingeben, in der sie ausgefuehrt werden soll. Muss man zum Beispiel eine 
   Tuer zuerst oeffnen und damit man das Haus betreten kann, dann gibt man in der Reihen Folge auch ein:
   
-        #zurueck oeffne tuer
-        #zurueck betrete haus
+      #zurueck oeffne tuer
+      #zurueck betrete haus
         
 
 ### 5.4. Anzeige des bisher aufgezeichneten Weges
 
 Mit dem Befehl
 
-        #zeigeweg <anzahl>
+          #zeigeweg <anzahl>
         
 kann man sich die letzten \<anzahl> gespeicherten Bewegungsaktionen sowohl vom Hin- als auch dem Rueckweg anzeigen lassen.
 Gibt man als Anzahl 0 ein, dann wird der gesamte aufgezeichnete Weg angezeigt. 
 
-Beispiel: \#zeigeweg 5
+Beispiel: 
+
+     #zeigeweg 5
 
 Zeigt die letzten 5 gespeicherten Bewegungsaktionen.
 
@@ -185,12 +189,14 @@ Zeigt die letzten 5 gespeicherten Bewegungsaktionen.
 
 Mit
 
-        #lvor <anzahl>
-        #lzurueck <anzahl>
+           #lvor <anzahl>
+           #lzurueck <anzahl>
         
 werden die letzten \<anzahl> viel Bewegungsaktionen geloescht.
 
-Beispiel: \#lvor 3
+Beispiel: 
+
+     #lvor 3
 
 Loescht die letzten 3 Bewegungsaktionen vom Hinweg.
         
@@ -198,14 +204,14 @@ Loescht die letzten 3 Bewegungsaktionen vom Hinweg.
 
 Hat man mit der Wegaufzeichnung den zu speichernden Weg abgelaufen, dann kann man folgende Befehle zum Speichern nutzen:
 
-        #sweg <name>
-        #sweg <name> <startpunkt>
-        #sweg <name>-z
-        #sweg <name> <startpunkt>-z
-        #sweg <name>:<titel>
-        #sweg <name> <startpunkt>:<titel>
-        #sweg <name>-z:<titel>
-        #sweg <name> <startpunkt>-z:<titel>
+          #sweg <name>
+          #sweg <name> <startpunkt>
+          #sweg <name>-z
+          #sweg <name> <startpunkt>-z
+          #sweg <name>:<titel>
+          #sweg <name> <startpunkt>:<titel>
+          #sweg <name>-z:<titel>
+          #sweg <name> <startpunkt>-z:<titel>
         
  *WICHTIG:* Zwischen den Namen und dem Startpunkt muss ein Leerzeichen stehen, aber die Benutzung von -z oder :\<titel> 
      muessen zwingend ohne Leerzeichen gemacht werden! Daher bitte genau auf die Syntax achten, siehe die Beispiele:
@@ -219,8 +225,8 @@ Hat man mit der Wegaufzeichnung den zu speichernden Weg abgelaufen, dann kann ma
           #sweg sandtiger-z:Der Sandtiger beim Wettpalast am Westeingang von Port Vain
           #sweg polartiger moulokin:Der Polartiger westlich von Moulokin
           
-  Generell ist zu empfehlen eher kurze Namen zu geben um diese schnell eingeben zu koennen. Fuer "Sandtiger" waere auch "st"
-  moeglich. Namen koennen eine beliebige Kombination aus Zahlen und Buchstaben sein.
+ Generell ist zu empfehlen eher kurze Namen zu geben um diese schnell eingeben zu koennen. Fuer "Sandtiger" waere auch "st"
+ moeglich. Namen koennen eine beliebige Kombination aus Zahlen und Buchstaben sein.
   
  Wie zu sehen ist, gibt es 4 verschiedene Parameter die man in allen Kombinationen an den Befehl weitergeben kann.
  Der Name muss aber immer dabei sein. Klar, der neue Punkt muss einen eindeutigen noch nicht benutzten Namen haben, 
@@ -336,7 +342,9 @@ Der Befehl
           
  benennt den Punkt mit dem Namen \<old_name> in \<new_name> um. 
  
- Zum Beispiel: \#rename sandtiger st
+ Beispiel: 
+ 
+     #rename sandtiger st
  
  Benennt den gespeicherten Punkt "sandtiger" in den kuerzen Namen "st" um.
      
@@ -363,7 +371,9 @@ von anderen Raeumen aus funktioniert. Daher kann man
                
 sich anzeigen lassen, welche Raum-IDs an dem Punkt mit den Namen \<name> gespeichert wurden.
  
-Beispiel: \#zeigeids sandtiger
+Beispiel: 
+
+     #zeigeids sandtiger
  
 Zeigt alle gespeicherten IDs, die dem Punkt "sandtiger" zugeordnet wurden. Natuerlich muss man auch abgleichen koennen, 
 wie die Raum-ID im dem Raum ist, in dem man sich befindet. Dazu kann man
@@ -377,7 +387,9 @@ man sich gerade befindet, dann gibt man
                
 ein um die ID dem Punkt mit den Namen \<name> hinzuzufuegen.
    
-Beispiel: \#aid sandtiger
+Beispiel: 
+
+     #aid sandtiger
    
 Fuegt die aktuelle Raum-ID dem Punkt "sandtiger" hinzu.
    
@@ -388,7 +400,9 @@ sich zuerst die IDs zum Punkt anzeigen. Die werden aufgelistet mit einer Nummer.
    
 loeschen.
    
-Beispiel: \#lid sandtiger 3
+Beispiel: 
+
+     #lid sandtiger 3
    
 Loescht die 3. ID des Punktes namens "sandtiger".
    
@@ -401,7 +415,9 @@ Informationen hinzufuegen? Dies ist mit dem Befehl
                
  erreichen. Dann wird dem Punkt \<name> der alte Titel durch \<titel> ersetzt.
  
- Beispiel: \#retitel st Am Sandtiger von Port Vain
+ Beispiel: 
+
+     #retitel st Am Sandtiger von Port Vain
  
  Ersetzt den alten Titel von "st" durch "Am Sandtiger von Port Vain"
      
@@ -424,20 +440,41 @@ ein zweites Mal ein und fertig.
 
 Beispiel 1:
 
-\#loesche st
-
--- Löscht den Punkt st, zunaechst temporaer
-
-\#retitel st Am Sandtiger von Port Vain
-
--- Fuegt dem Punkt st wieder einen Titel hinzu, womit die Loeschung rueckgaengig gemacht wurde.
+     #loesche st
+     -- Löscht den Punkt st, zunaechst temporaer
+     #retitel st Am Sandtiger von Port Vain
+     -- Fuegt dem Punkt st wieder einen Titel hinzu, womit die Loeschung rueckgaengig gemacht wurde.
 
 Beispiel 2:
 
-\#loesche st
-
-\#loesche st
+     #loesche st
+     #loesche st
 
 -- Löscht den Punkt st dauerhaft
 
-## 9. Suchfunktion fuer die gespeichten Punkte (coming soon)
+## 9. Suchfunktion fuer die gespeichten Punkte
+
+Vielleicht hat man vergessen, welche Namen man fuer die Punkte bereits vergeben wurden oder man moechte den Namen von einem
+Punkt raussuchen, erinnert sich aber nur an den Titel oder einen Teil des Titels? Dann kann man folgenden Befehl benutzen:
+
+               #finde <Buchstabe oder Text>
+               
+Uebergibt man der Funktion den Parameter nur einen Buchstaben, dann erhaelt man eine Liste aller vergebenen Namen, 
+die mit diesem Buchstaben anfangen. Gibt man mehr als einen Buchstaben ein, dann werden alle Titel darauf geprueft, welcher
+den Parameter als Teil enthaelt.
+ 
+Beispiel 1:
+ 
+     #finde a
+     
+Listet alle Namen auf, die mit dem Buchstaben 'a' anfangen.
+ 
+Beispiel 2:
+ 
+     #finde haus
+     
+Listet alle Namen mit Titel auf, wo der Titel d 'haus' beeinhaltet.
+
+## 10. Externe Speicherung der Wege mit automatischem monatlichen Backup (coming soon)
+
+## 11. Super-Safe-Modus (coming soon)
