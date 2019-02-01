@@ -435,6 +435,7 @@ Beispiel 1:
 Beispiel 2:
 
 \#loesche st
+
 \#loesche st
 
 -- Löscht den Punkt st dauerhaft
