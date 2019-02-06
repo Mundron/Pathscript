@@ -1,7 +1,10 @@
 # Wegeskript
 
 Dieses Skript ist in Lua fürs [Mudlet](https://www.mudlet.org/) geschrieben.
-Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud.de) erstellt, so dass gewisse Rahmenbedingungen erfuellt sein muessen, siehe Installation. Generell ist es aber auch auf andere Spiele uebertragbar.
+Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud.de) erstellt, so dass gewisse 
+Rahmenbedingungen erfuellt sein muessen, siehe Installation. Generell ist es aber auch auf andere Spiele uebertragbar.
+Allerdings ist dazu zu erwaehnen, dass dieses Skript Daten aus gmcp.MG.char benutzt. In anderen Spielen wird die Datenstruktur
+von gmcp moeglicherweise anders sein, so dass diese Stellen angepasst werden muessten.
 
 ### Inhaltsverzeichnis
 
@@ -26,24 +29,26 @@ Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud
      5.7. Speichern nur des Hinweges oder nur des Rueckweges
 
      5.8. Tipps/Tricks fuer effektive Wege
-
-6. Schnelles Reisen mit dem Wegeskript
-
-7. Bearbeitung von gespeicherten Punkten
-
-     7.1. Namen aendern
      
-     7.2. ID auslesen, hinzufuegen oder loeschen
+6. Nutzung verschiedener Wege fuer Seher und Nichtseher
+
+7. Schnelles Reisen mit dem Wegeskript
+
+8. Bearbeitung von gespeicherten Punkten
+
+     8.1. Namen aendern
      
-     7.3. Titel aendern
+     8.2. ID auslesen, hinzufuegen oder loeschen
      
-8. Gespeichtern Punkt loeschen
+     8.3. Titel aendern
+     
+9. Gespeichtern Punkt loeschen
 
-9. Suchfunktion fuer die gespeichten Punkte
+10. Suchfunktion fuer die gespeichten Punkte
 
-10. Externe Speicherung der Wege mit automatischem monatlichen Backup
+11. Externe Speicherung der Wege mit automatischem monatlichen Backup
 
-11. Super-Safe-Modus
+12. Super-Safe-Modus
 
 
 ## 1. Was ist das Wegeskript
@@ -69,6 +74,7 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
      
      suchen, was Zeile 10 sein sollte.
      Zwischen den Anfuehrungszeichen " " den Pfad eingeben, wo der Wegeskript die Wege speichern darf.
+     Dabei ist zu beachten, dass aus technischen Gruenden im Pfad stets  / anstatt \\ zu verwenden ist.
     
     
  ## 3. Wie kann man das Wegeskript nutzen?
@@ -290,13 +296,21 @@ so muss man nicht den gesamten Weg neu ablaufen! Man kann beim Speichern den and
 angeben, so dass der neue Punkt nur den Hin- und Rueckweg zum alten Punkt benoetigt.
 Allerdings wird das Skript trotzdem den Weg bis zum Zentrum zuruecklaufen. Dies ist jedoch so schnell, dass man es nicht merkt.
 
-Trick 4 (fuer Morgengrauen):
+Trick 4:
 Als Seher gibt es Portale und diese erlauben einfachere und kuerzere Wege. Man kann naemlich die "Portale" als Zentrum waehlen.
 Jeder Wege sollte also von naechsten Portel hin und zurueck fuehren. Allerdings muss man dann beachten, 
-dass jeder Weg mit einem Teleport-Befehle zum entsprechenden Portal beginnen muss! Lies dazu noch 7.2., da bei dieser speziellen Form Raum-IDs nachgetragen werden muessen.
+dass jeder Weg mit einem Teleport-Befehle zum entsprechenden Portal beginnen muss! Lies dazu noch 8.2., da bei dieser 
+speziellen Form Raum-IDs nachgetragen werden muessen.
 
+## 6. Nutzung verschiedener Wege fuer Seher und Nichtseher
 
-## 6. Schnelles Reisen mit dem Wegeskript
+Trick 4 aus 5.8 erlaubt es sehr kurze Wege fuer Seher zu speichern. Ueberhaupt gibt es durch die Portale auch Moeglichkeiten
+schnell zu manchen Inseln oder abgelegenen Orten zu reisen. Also Fazit: Wie waere es, wenn man bei den Wegen unterscheidet 
+zwischen Wege fuer Seher und fuer Nichtseher ohne die Syntax zu verkomplizieren? Ganz automatisch? Woah, das geht!
+
+__noch in Bearbeitung__
+
+## 7. Schnelles Reisen mit dem Wegeskript
 
 Es gibt zwei Moeglichkeiten das schnelle Reisen mit dem Wegeskript zu bedienen:
 
@@ -328,11 +342,11 @@ Es gibt zwei Moeglichkeiten das schnelle Reisen mit dem Wegeskript zu bedienen:
   sich zu einem gespeichtern Punkt orientieren und dann die 1. Moeglichkeit nutzen. Die Gefahr des Irrlaufens besteht 
   natuerlich trotzdem, aber der Befehl wird dennoch unter diesen Umstaenden ausgefuehrt.
   
-## 7. Bearbeitung von gespeicherten Punkten
+## 8. Bearbeitung von gespeicherten Punkten
 
 Natuerlich passiert es, dass man sich vertippt oder etwas an den Informationen, wie dem Namen, den IDs oder dem Titel was nachtraeglich aendern will. Dies ist auch moeglich.
 
-### 7.1. Namen aendern
+### 8.1. Namen aendern
 
 Der Befehl
 
@@ -346,7 +360,7 @@ Der Befehl
  
  Benennt den gespeicherten Punkt "sandtiger" in den kuerzen Namen "st" um.
      
-###  7.2. ID auslesen, hinzufuegen oder loeschen
+###  8.2. ID auslesen, hinzufuegen oder loeschen
      
 Die Raum-ID wird normalerweise bei der Wegaufzeichnung mitgefuehrt und mitgespeichert. Dennoch kann es Vorteile haben mehr 
 als eine Raum-ID fuer einen gespeicherten Punkt zu hinterlegen. Zum Beispiel in der Situation von Trick 4 im Abschnitt 5.8..
@@ -404,7 +418,7 @@ Beispiel:
    
 Loescht die 3. ID des Punktes namens "sandtiger".
    
-###  7.3. Titel aendern
+###  8.3. Titel aendern
 
 Vielleicht hat man einen doofen Titel ausgewaehlt beim Speichern. Oder der Titel ist zu ungenau und man moechte zusaetzliche
 Informationen hinzufuegen? Dies ist mit dem Befehl
@@ -419,7 +433,7 @@ Informationen hinzufuegen? Dies ist mit dem Befehl
  
  Ersetzt den alten Titel von "st" durch "Am Sandtiger von Port Vain"
      
-## 8. Gespeichtern Punkt loeschen
+## 9. Gespeichtern Punkt loeschen
 
 Vielleicht hat man sich bei einem Weg vertan oder etwas wurde was falsch gespeichert oder man hat andere Gruende einen
 gespeicherten Punkt wieder loeschen zu wollen. Um sicher zu gehen, dass man nicht verstehentlich einen falschen Punkt loescht,
@@ -450,7 +464,7 @@ Beispiel 2:
 
 -- Löscht den Punkt st dauerhaft
 
-## 9. Suchfunktion fuer die gespeichten Punkte
+## 10. Suchfunktion fuer die gespeichten Punkte
 
 Vielleicht hat man vergessen, welche Namen man fuer die Punkte bereits vergeben wurden oder man moechte den Namen von einem
 Punkt raussuchen, erinnert sich aber nur an den Titel oder einen Teil des Titels? Dann kann man folgenden Befehl benutzen:
@@ -473,7 +487,7 @@ Beispiel 2:
      
 Listet alle Namen mit Titel auf, wo der Titel d 'haus' beeinhaltet.
 
-## 10. Externe Speicherung der Wege mit automatischem monatlichen Backup
+## 11. Externe Speicherung der Wege mit automatischem monatlichen Backup
 
 Fuer alle Faelle wird automatisch vom Wegeskript monatlich ein Backup der gespeicherten Wege erstellt. Dazu wird im 
 Arbeitsordnet erstellt. Der Name endet mit dem Jahr und dem Monat vom Backup. Ausserdem ist eine Datei dort erstellt, 
@@ -492,7 +506,7 @@ Die Zeile
      
 muss dann einfach nur geloescht werden (dies sollte Zeile 10 sein).
 
-## 11. Super-Safe-Modus
+## 12. Super-Safe-Modus
 
 Normalerweise werden beim Start des Profils die ganzen Wege geladen und beim Beenden werden die ganzen Wege gespeichert.
 Aber falls der Client abstuerzen sollte, dann gehen die Veraenderungen seit dem Start verloren.
