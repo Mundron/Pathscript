@@ -186,7 +186,7 @@ elseif #matches==7 then
 	-- #sweg &lt;name&gt; &lt;startpunkt&gt;:&lt;Titel&gt;
 	-- #sweg &lt;name&gt;-z:&lt;Titel&gt;
 	-- #sweg &lt;name&gt; &lt;startpunkt&gt;-z:&lt;Titel&gt;
-	PF:save_path(matches[2], matches[4], matches[5]=="-z", "")
+	PF:save_path(matches[2], matches[4], matches[5]=="-z", matches[7])
 end
 </script>
 					<command></command>
@@ -320,7 +320,9 @@ PF:retitle_path(matches[2],matches[3])</script>
 
 
 PF = {directory="C:/Users/Mundron/Documents/Morgengrauen/Einstellungen/",
-			filename="Wege",
+			filename1="Wege_NS",
+			filename2="Wege",
+			wizlevel=-1,
 			pathes={},
 			titles={},
 			ids={},
@@ -447,8 +449,8 @@ function PF:show_forth(num)
 		num=#self.cpforth
 	end
 	echo("\n\nDie letzten "..num.." Richtungen wurden vorwaerts gespeichert:\n\n")
-	for i=0,num-1,1 do
-		echo(self.cpforth[#self.cpforth-i].."\n")
+	for i=1,num,1 do
+		echo(self.cpforth[i].."\n")
 	end
 	echo("\n\n\n")
 end
@@ -936,7 +938,15 @@ end</script>
 -------------------------------------------------
 
 function PF:load()
-  local weglinien = self:load_lines(self.filename)
+	local filename
+
+	if self.wizlevel == 0 then
+		filename=self.filename1
+	else
+		filename=self.filename2
+	end
+
+  local weglinien = self:load_lines(filename)
 	self.titles = {}
   self.pathes = {}
   self.ids = {}
@@ -974,7 +984,7 @@ function PF:load()
 		end
   	self:info("Alle "..self.pathcounter.." Wege geladen!")
 	else
-		self:save_lines(self.filename, {""})
+		self:save_lines(filename, {""})
 		self:warning("Die Datei fuer die Wege '"..self.filename..".txt' existiert nicht.\n Eine leere Datei zum Speichern der Wege wurde erstellt.")
 	end
 end
@@ -1059,7 +1069,13 @@ function PF:save()
       table.insert(temp,"end")
     end
   end
-  self:save_lines(self.filename, temp)
+	local filename
+	if self.wizlevel == 0 then
+		filename = self.filename1
+	else
+		filename = self.filename2
+	end
+  self:save_lines(filename, temp)
   self:info("Alle " .. endindex .. " Wege wurden gespeichert!")
 end
 
@@ -1115,7 +1131,7 @@ function PF:save_path(name, startpoint, backwards, title)
 				self:save()
 			end
     else
-      self:info("Weg '"..name.."'wurde nur temporaer gespeichert.")
+      self:info("Weg '"..name.."' wurde nur temporaer gespeichert.")
     end
   end
 end
@@ -1261,22 +1277,31 @@ end</script>
 						<string>sysExitEvent</string>
 					</eventHandlerList>
 				</Script>
-			</ScriptGroup>
-		</ScriptGroup>
-		<Script isActive="yes" isFolder="no">
-			<name>initGMCP</name>
-			<packageName></packageName>
-			<script>-------------------------------------------------
---   Sagt gmcp, dass er alle Daten senden soll --
+				<Script isActive="yes" isFolder="no">
+					<name>wait_for_wizlevel_changes</name>
+					<packageName></packageName>
+					<script>-------------------------------------------------
+--         Put your Lua functions here.        --
+--                                             --
+-- Note that you can also use external Scripts --
 -------------------------------------------------
 
-function initGMCP()
-    sendGMCP( [[Core.Supports.Set [ "MG.char 1", "MG.room 1", "comm.channel 1" ] ]])
+function wait_for_wizlevel_changes()
+	if PF.wizlevel&gt;-1 then
+		if PF.wizlevel&lt;gmcp.MG.char.base.wizlevel then
+			PF:info("Aufstieg zum Seher, Wege muessen neu geladen werden.")
+			PF:save()
+			PF.wizlevel=gmcp.MG.char.base.wizlevel
+			PF:load()
+		end
+	end
 end</script>
-			<eventHandlerList>
-				<string>gmcp.Char</string>
-			</eventHandlerList>
-		</Script>
+					<eventHandlerList>
+						<string>gmcp.MG.char.base</string>
+					</eventHandlerList>
+				</Script>
+			</ScriptGroup>
+		</ScriptGroup>
 	</ScriptPackage>
 	<KeyPackage />
 	<VariablePackage>
