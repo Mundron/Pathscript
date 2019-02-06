@@ -1289,10 +1289,16 @@ end</script>
 function wait_for_wizlevel_changes()
 	if PF.wizlevel&gt;-1 then
 		if PF.wizlevel&lt;gmcp.MG.char.base.wizlevel then
-			PF:info("Aufstieg zum Seher, Wege muessen neu geladen werden.")
+			PF:info("Aufstieg zum Seher, Nichtseher-Wege werden gespeichert.")
 			PF:save()
 			PF.wizlevel=gmcp.MG.char.base.wizlevel
-			PF:load()
+			if PF:file_exists(PF.filename2) then
+				PF:info("Datei fuer Seher existiert nicht. Nicht-Seher Wege werden uebertragen.")
+				PF:save()
+			else
+				PF:info("Seher Wege werden nun geladen.")
+				PF:load()
+			end
 		end
 	end
 end</script>
