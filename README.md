@@ -195,9 +195,9 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
 
  Dazu kann man die Befehle
 
-         #wa start
-         #wa stop
-         #wa weiter
+           #wa start
+           #wa stop
+           #wa weiter
  benutzen.
 
 ### 5.3. Wie wird die Bewegung von der Wegaufzeichnung festgehalten?
@@ -212,23 +212,23 @@ Lediglich die Bewegungsaktionen ausserhalb dieser Liste sind manuell, wie in 5.4
 zur Aufzeichnung hinzuzufuegen. Die Liste der automatisch erkennbaren Richtungen
 ist:
 
-n, norden, nordoben, nordunten,
-no, nordosten, nordostoben, nordostunten,
-o, osten, ostoben, ostunten,
-so, suedosten, suedostoben, suedostunten,
-s, sueden, suedoben, suedunten,
-sw, suedwesten, suedwestoben, suedwestunten,
-w, westen, westoben, westunten,
-nw, nordwesten, nordwestoben, nordwestunten,
-ob, oben,
-u, unten,
-raus
+      n, norden, nordoben, nordunten,
+      no, nordosten, nordostoben, nordostunten,
+      o, osten, ostoben, ostunten,
+      so, suedosten, suedostoben, suedostunten,
+      s, sueden, suedoben, suedunten,
+      sw, suedwesten, suedwestoben, suedwestunten,
+      w, westen, westoben, westunten,
+      nw, nordwesten, nordwestoben, nordwestunten,
+      ob, oben,
+      u, unten,
+      raus
 
 ### 5.4. Manuell Bewegungsaktion hinzufuegen
 
 Mit
 
-               #vor <aktion>
+           #vor <aktion>
 
 gibt man manuell die Bewegungsaktion <aktion> an die Wegaufzeichnung weiter UND gleichzeitig wird dieser auch ausgefuehrt.
 Damit braucht nicht die Aktion zur Bewegung eingeben und es an die Wegaufzeichnung weitergeben, sondern man kann beides mit
@@ -236,7 +236,7 @@ diesem einen Befehl machen.
 
   Beispiel:
 
-     #vor betrete haus
+           #vor betrete haus
 
 
   Damit wir die Aktion "betrete haus" ausgefuehrt und an die Wegaufzeichnung weiter gegeben.
@@ -244,28 +244,28 @@ diesem einen Befehl machen.
 
   Fuer den Rueckweg benutzt man in dem Raum den Befehl
 
-               #zurueck <aktion>
+           #zurueck <aktion>
 
   Im Gegensatz zum Hinweg wird bei dieser Befehl die Aktion _NICHT_ ausgefuehrt. Wenn mehrere Aktionen fuer den Rueckweg
   noetig sind, dann muss man sie in der Reihenfolge eingeben, in der sie ausgefuehrt werden soll. Muss man zum Beispiel eine
   Tuer zuerst oeffnen und damit man das Haus betreten kann, dann gibt man in der Reihen Folge auch ein:
 
-      #zurueck oeffne tuer
-      #zurueck betrete haus
+           #zurueck oeffne tuer
+           #zurueck betrete haus
 
 
 ### 5.5. Anzeige des bisher aufgezeichneten Weges
 
 Mit dem Befehl
 
-          #zeigeweg <anzahl>
+           #zeigewa <anzahl>
 
 kann man sich die letzten \<anzahl> gespeicherten Bewegungsaktionen sowohl vom Hin- als auch dem Rueckweg anzeigen lassen.
 Gibt man als Anzahl 0 ein, dann wird der gesamte aufgezeichnete Weg angezeigt.
 
 Beispiel:
 
-     #zeigeweg 5
+           #zeigewa 5
 
 Zeigt die letzten 5 gespeicherten Bewegungsaktionen.
 
@@ -280,7 +280,7 @@ werden die letzten \<anzahl> viel Bewegungsaktionen geloescht.
 
 Beispiel:
 
-     #lvor 3
+           #lvor 3
 
 Loescht die letzten 3 Bewegungsaktionen vom Hinweg.
 
@@ -288,26 +288,26 @@ Loescht die letzten 3 Bewegungsaktionen vom Hinweg.
 
 Hat man mit der Wegaufzeichnung den zu speichernden Weg abgelaufen, dann kann man folgende Befehle zum Speichern nutzen:
 
-          #sweg <name>
-          #sweg <name> <startpunkt>
-          #sweg <name>-z
-          #sweg <name> <startpunkt>-z
-          #sweg <name>:<titel>
-          #sweg <name> <startpunkt>:<titel>
-          #sweg <name>-z:<titel>
-          #sweg <name> <startpunkt>-z:<titel>
+           #sweg <name>
+           #sweg <name> <startpunkt>
+           #sweg <name>-z
+           #sweg <name> <startpunkt>-z
+           #sweg <name>:<titel>
+           #sweg <name> <startpunkt>:<titel>
+           #sweg <name>-z:<titel>
+           #sweg <name> <startpunkt>-z:<titel>
 
  *WICHTIG:* Zwischen den Namen und dem Startpunkt muss ein Leerzeichen stehen, aber die Benutzung von -z oder :\<titel>
      muessen zwingend ohne Leerzeichen gemacht werden! Daher bitte genau auf die Syntax achten, siehe die Beispiele:
 
-          #sweg sandtiger
-          #sweg polartiger moulokin
-          #sweg sandtiger-z
-          #sweg polartiger moulokin-z
-          #sweg sandtiger:Der Sandtiger beim Wettpalast am Westeingang von Port Vain
-          #sweg polartiger moulokin:Der Polartiger westlich von Moulokin
-          #sweg sandtiger-z:Der Sandtiger beim Wettpalast am Westeingang von Port Vain
-          #sweg polartiger moulokin:Der Polartiger westlich von Moulokin
+           #sweg sandtiger
+           #sweg polartiger moulokin
+           #sweg sandtiger-z
+           #sweg polartiger moulokin-z
+           #sweg sandtiger:Der Sandtiger beim Wettpalast am Westeingang von Port  Vain
+           #sweg polartiger moulokin:Der Polartiger westlich von Moulokin
+           #sweg sandtiger-z:Der Sandtiger beim Wettpalast am Westeingang von Port Vain
+           #sweg polartiger moulokin:Der Polartiger westlich von Moulokin
 
  Generell ist zu empfehlen eher kurze Namen zu geben um diese schnell eingeben zu koennen. Fuer "Sandtiger" waere auch "st"
  moeglich. Namen koennen eine beliebige Kombination aus Zahlen und Buchstaben sein.
@@ -339,10 +339,10 @@ Nennen den Basispunkt B und einen interessanten Punkt X. Wenn wir nur den Hinweg
 dann laufen starten wir mit der Wegaufzeichnung bei B und laufen nach X. Nun koennen wir folgende Befehle, aehnlich wie bei 5.6.
 zum Speichern des Hinweges benutzen:
 
-          #sebs <name>
-          #sebs <name> <startpunkt>
-          #sebs <name>:<titel>
-          #sebs <name> <startpunk>:<titel>
+           #sebs <name>
+           #sebs <name> <startpunkt>
+           #sebs <name>:<titel>
+           #sebs <name> <startpunk>:<titel>
 
  Es gelten hier die selben Syntaxregeln, wie auch bei 5.6. Der Name "sebs" steht fuer "speichere Einbahnstrasse",
  da nur die eine Richtung gespeichert werden soll. Aber selbstverstaendlich kann sich jeder die Namen der Aliase anpassen
@@ -351,10 +351,10 @@ zum Speichern des Hinweges benutzen:
  Wollen wir nur den Rueckweg festhalten, also den Weg von X nach B, dann starten wir die Wegaufzeichnung bei X und nehmen
  den Weg nach B auf. Die Befehle zum Speichern sind die selben, nur dass noch der Parameter -z dazu kommt, also
 
-          #sebs <name>-z
-          #sebs <name> <startpunkt>-z
-          #sebs <name>-z:<titel>
-          #sebs <name> <startpunk>-z:<titel>
+           #sebs <name>-z
+           #sebs <name> <startpunkt>-z
+           #sebs <name>-z:<titel>
+           #sebs <name> <startpunk>-z:<titel>
 
 
 
@@ -397,14 +397,14 @@ Es gibt zwei Moeglichkeiten das schnelle Reisen mit dem Wegeskript zu bedienen:
 
 1. Moeglichkeit:
 
-          #go <start> <ziel>
+           #go <start> <ziel>
   Dies ist ein *blindes Laufen* vom Punkt \<start> nach Punkt \<ziel>.
   Dabei arbeitet das Skript stur den Weg von \<start> zum Basispunkt und dann vom Basispunkt nach \<ziel> ab.
 
 
 2. Moeglichkeit:
 
-          #go <ziel>
+           #go <ziel>
 
   Dies ist ein automatisches Laufen. Dabei ermittelt der Wegeskript aus der Raum-ID, ob an dem Standort sich ein gespeicherter Punkt befindet. Falls dem so ist, dann laeuft man zum Punkt \<ziel>. Befindet man sich aber in keinem gespeicherten Punkt, dann kommt nur eine Fehlermeldung.
 
@@ -430,7 +430,7 @@ Das kann zwei Ursachen haben. Entweder hat sich ein Fehler im einem Weg
 eingeschlichen oder auf dem Weg ist etwas Unerwartes passiert, wodurch
 der Char nicht ans richtige Ziel ankommen konnte. Dazu gibt es den Befehl
 
-        #runned
+           #runned
 
 Dieser gibt einen den vollstaendigen Weg an, den das Skript bei der letzten
 Reise abgearbeitet hat. Allerdings kann es natuerlich nicht zeigen an welcher
@@ -444,13 +444,13 @@ Natuerlich passiert es, dass man sich vertippt oder etwas an den Informationen, 
 
 Der Befehl
 
-          #rename <old_name> <new_name>
+           #rename <old_name> <new_name>
 
  benennt den Punkt mit dem Namen \<old_name> in \<new_name> um.
 
  Beispiel:
 
-     #rename sandtiger st
+           #rename sandtiger st
 
  Benennt den gespeicherten Punkt "sandtiger" in den kuerzen Namen "st" um.
 
@@ -473,42 +473,42 @@ ich dann vielleicht nicht wirklich am Sandtiger stehe, da der Weg funktioniert!
 Natuerlich gibt es auch noch andere Moeglichkeiten mit mehr als einer ID zu einem Punkt zu arbeiten, wenn der Weg auch
 von anderen Raeumen aus funktioniert. Daher kann man
 
-               #zeigeids <namen>
+           #zeigeids <namen>
 
 sich anzeigen lassen, welche Raum-IDs an dem Punkt mit den Namen \<name> gespeichert wurden.
 
 Beispiel:
 
-     #zeigeids sandtiger
+           #zeigeids sandtiger
 
 Zeigt alle gespeicherten IDs, die dem Punkt "sandtiger" zugeordnet wurden. Natuerlich muss man auch abgleichen koennen,
 wie die Raum-ID im dem Raum ist, in dem man sich befindet. Dazu kann man
 
-               #raumid
+           #raumid
 
 so ohne Argumente eingeben. Die Raum-ID wird im Spiel als Info angezeigt. Will man nun die ID des Raumes hinzufuegen in der
 man sich gerade befindet, dann gibt man
 
-               #aid <name>
+           #aid <name>
 
 ein um die ID dem Punkt mit den Namen \<name> hinzuzufuegen.
 
 Beispiel:
 
-     #aid sandtiger
+           #aid sandtiger
 
 Fuegt die aktuelle Raum-ID dem Punkt "sandtiger" hinzu.
 
 Natuerlich kann es passieren, dass man sich dabei vertan hat und eine Raum-ID wieder loeschen will. Dazu laesst man
 sich zuerst die IDs zum Punkt anzeigen. Die werden aufgelistet mit einer Nummer. Anschliessen kann man eine ID mit
 
-               #lid <name> <nummer>
+           #lid <name> <nummer>
 
 loeschen.
 
 Beispiel:
 
-     #lid sandtiger 3
+           #lid sandtiger 3
 
 Loescht die 3. ID des Punktes namens "sandtiger".
 
@@ -517,13 +517,13 @@ Loescht die 3. ID des Punktes namens "sandtiger".
 Vielleicht hat man einen doofen Titel ausgewaehlt beim Speichern. Oder der Titel ist zu ungenau und man moechte zusaetzliche
 Informationen hinzufuegen? Dies ist mit dem Befehl
 
-               #retitel <name> <titel>
+           #retitel <name> <titel>
 
  erreichen. Dann wird dem Punkt \<name> der alte Titel durch \<titel> ersetzt.
 
  Beispiel:
 
-     #retitel st Am Sandtiger von Port Vain
+           #retitel st Am Sandtiger von Port Vain
 
  Ersetzt den alten Titel von "st" durch "Am Sandtiger von Port Vain"
 
@@ -533,7 +533,7 @@ Vielleicht hat man sich bei einem Weg vertan oder etwas wurde was falsch gespeic
 gespeicherten Punkt wieder loeschen zu wollen. Um sicher zu gehen, dass man nicht verstehentlich einen falschen Punkt loescht,
 wird das Loeschen in zwei Stufen ausgefuehrt. Dazu verwendet man den Befehl
 
-               #loesche <name>
+           #loesche <name>
 
 benutzen um den Punkt \<name> zu loeschen. Wenn man den Befehl einmal eingibt, dann wird erstmal nur der Titel geloescht.
 Damit zaehlt der Punkt als *temporaerer Punkt* (vergleiche 5.7.). Solange das Profil des Clients noch nicht geschlossen wird,
@@ -546,15 +546,15 @@ ein zweites Mal ein und fertig.
 
 Beispiel 1:
 
-     #loesche st
-     -- Löscht den Punkt st, zunaechst temporaer
-     #retitel st Am Sandtiger von Port Vain
-     -- Fuegt dem Punkt st wieder einen Titel hinzu, womit die Loeschung rueckgaengig gemacht wurde.
+           #loesche st
+           -- Löscht den Punkt st, zunaechst temporaer
+           #retitel st Am Sandtiger von Port Vain
+           -- Fuegt dem Punkt st wieder einen Titel hinzu, womit die Loeschung rueckgaengig gemacht wurde.
 
 Beispiel 2:
 
-     #loesche st
-     #loesche st
+           #loesche st
+           #loesche st
 
 -- Löscht den Punkt st dauerhaft
 
@@ -563,7 +563,7 @@ Beispiel 2:
 Vielleicht hat man vergessen, welche Namen man fuer die Punkte bereits vergeben wurden oder man moechte den Namen von einem
 Punkt raussuchen, erinnert sich aber nur an den Titel oder einen Teil des Titels? Dann kann man folgenden Befehl benutzen:
 
-               #finde <Buchstabe oder Text>
+           #finde <Buchstabe oder Text>
 
 Uebergibt man der Funktion den Parameter nur einen Buchstaben, dann erhaelt man eine Liste aller vergebenen Namen,
 die mit diesem Buchstaben anfangen. Gibt man mehr als einen Buchstaben ein, dann werden alle Titel darauf geprueft, welcher
@@ -571,13 +571,13 @@ den Parameter als Teil enthaelt.
 
 Beispiel 1:
 
-     #finde a
+           #finde a
 
 Listet alle Namen auf, die mit dem Buchstaben 'a' anfangen.
 
 Beispiel 2:
 
-     #finde haus
+           #finde haus
 
 Listet alle Namen mit Titel auf, wo der Titel d 'haus' beeinhaltet.
 
@@ -596,7 +596,7 @@ Im Normalfall wird es wahrscheinlich nicht notwendig sein ein Backup zu benutzen
 dann schaut man nach der Installation bei den Skripten im Ordner "waiting for events" im Element "load_pathes_at_beginn".
 Die Zeile
 
-     PF:test_backup()
+           PF:test_backup()
 
 muss dann einfach nur geloescht werden (dies sollte Zeile 10 sein).
 
@@ -611,7 +611,7 @@ Punktes, sei es Name, Titel oder ID.
 
 Standardmaessig ist der Modus eingeschaltet. Man kann dies bei Skripte im Element "Core" in der Zeile
 
-               super_safe=true}
+           super_safe=true}
 
 (Zeile 25) aendern, indem man *true* durch *false* ersetzt.
 
@@ -640,12 +640,12 @@ Standardmaessig ist der Modus eingeschaltet. Man kann dies bei Skripte im Elemen
   einfacher. Aus diesem Grund habe ich eine Hilfefunktion eingebaut, die auf
   zwei Ebenen funktionert. Mit
 
-        hilfe WS
+           hilfe WS
 
   wird die Liste der im Spiel zur Verfuegung stehenden Befehle mit ihrere
   Syntax angezeigt. Benoetigt man detailiertere Hilfe zu einem Befehl,
   so ist dies nun auch im Spiel moeglich. So wird zum Beispiel mit
 
-        hilfe WS #go
+           hilfe WS #go
 
   Die detailierte Information zum Befehl \#go angezeigt.
