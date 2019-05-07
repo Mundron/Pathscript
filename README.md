@@ -1,4 +1,4 @@
-# Wegeskript (v1.1)
+# Wegeskript (v1.2)
 
 Dieses Skript ist in Lua fürs [Mudlet](https://www.mudlet.org/) geschrieben.
 Das Skript habe ich fuer mich selbst zur Nutzung in [Morgengrauen](http://mg.mud.de) erstellt, so dass gewisse
@@ -20,15 +20,27 @@ von gmcp moeglicherweise anders sein, so dass diese Stellen angepasst werden mue
 
       4.2. Was hat sich  mit Version v1.1 geaendert?
 
-      4.3. Plaene fuer Version v1.2 (bisher)
+      4.3. Was hat sich  mit Version v1.2 geaendert?
+
+      4.4. Plaene fuer Version v1.3 (bisher)
 
 5. Wegaufzeichnung / Wie speichere ich Punkte fuer das Wegeskript?
 
      5.1. Basispunkt
 
-     5.2. Wegaufzeichnung starten/stoppen/fortsetzen
+     5.2. Wegaufzeichnung
+
+          5.2.1. Wegaufzeichnung Typ 1 (alte Version)
+
+          5.2.2. Wegaufzeichnung Typ 2 (ab v1.2)
 
      5.3. Wie wird die Bewegung von der Wegaufzeichnung festgehalten?
+
+          5.3.1 Anzeigen der erkennbaren Bewegung/Aktion (v1.2)
+
+          5.3.2. Hinzufuegen von neuen Bewegung/Aktionen (v1.2)
+
+          5.3.3. Loeschen von Bewegung/Aktion (v1.2)
 
      5.4. Manuell Bewegungsaktion hinzufuegen
 
@@ -42,7 +54,7 @@ von gmcp moeglicherweise anders sein, so dass diese Stellen angepasst werden mue
 
      5.9. Tipps/Tricks fuer effektive Wege
 
-6. Welcher Char nutzt welche Wege? Gemeinsame und unterschiedliche Wege. (on hold)
+6. Welcher Char nutzt welche Wege? Gemeinsame und unterschiedliche Wege.
 
 7. Reisen mit dem Wegeskript
 
@@ -66,9 +78,15 @@ von gmcp moeglicherweise anders sein, so dass diese Stellen angepasst werden mue
 
 12. Super-Safe-Modus
 
-13. Raummeldungen entlang des Weges weggaggen (ab v1.1)
+13. Raummeldungen entlang des Weges weggaggen (v1.1)
 
-14. Hilfefunktion im Spiel (ab v1.1)
+      13.1. Anzeigen der Gags (v1.2)
+
+      13.2. Hinzufuegen von Gags (v1.2)
+
+      13.3. Loeschen von Gags (v1.2)
+
+14. Hilfefunktion im Spiel (v1.1)
 
 
 ## 1. Was ist das Wegeskript
@@ -155,11 +173,22 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
   - Raummeldungen entlang des Weges kann gegaggt werden, siehe 13.
   - Wegaufzeichnung erkennt manuelle Richtungseingabe von Standardrichtungen automatisch, siehe 5.3. Damit ist man nicht gezwungen mein "evented navigation" zu nutzen, welches die Wegaufzeichnung mit dem Nummerfeld steuert.
 
-### 4.3. Plaene fuer Version v1.2 (bisher)
+### 4.3. Was hat sich  mit Version v1.2 geaendert?
+
+  Behobene Bugs:
+  - beim Speichern eines Weges wird nun die richtige Raum-ID gespeichert.
+  - Fehlendes Anfordern von gmcp-Pakete hinzugefuegt.
+
+  Neue Funktionen:
+  - Wegaufzeichnung Typ 2 hinzugefuegt, siehe
+  - Unterdrueckte Raummeldungen bei Reisen werden in einer externen Dateie gespeichert und kann nun flexibel angepasst werden, siehe Unterpunkte von 13..
+  - Automatisch erkannte Bewegungs bei der Wegauchzeichnung ist nun ebenfalls dynamisch anpassbar, siehe Unterpunkte von 5.3..
+
+### 4.4. Plaene fuer Version v1.3 (bisher)
 
   - Alle Bugs erschlagen, die in der Zwischenzeit auftauchen
-  - Waehrend der Reise zu unterbindende Raummeldungen in einer externen Datei speichern.
-  - Kopieren von Wegen aus oder in eine andere Datei ermoeglichen
+  - Verwaltungssystem fuer die gespeicherten Wege und Gags um diese zwischen Dateien hin und her zu kopieren und sie nach Wunsch je Profil zu personalisieren.
+  - Einstellungsverwaltung bei der Einstellungen im Spiel gesteuert werden koennen, so wieder Super-Safe-Modus oder die Dateinamen.
   - sinnvolle Vorschlaege/Wuensche von dir umsetzen :-)
 
 ## 5. Wegaufzeichnung / Wie speichere ich Punkte fuer das Wegeskript?
@@ -191,21 +220,78 @@ Das Wegeskript ermoeglicht schnelles Reise zwischen beliebigen gespeichtern Punk
  Der Wegeskript geht automatisch davon aus, dass der Rueckweg immer zu einem Basispunkt fuehrt. Deswegen ist es kein Problem
  in verschiedenen Gebieten auch unterschiedliche Basispunkte zu benutzen.
 
-### 5.2. Wegaufzeichnung starten/stoppen/fortsetzen
+### 5.2. Wegaufzeichnung
 
- Dazu kann man die Befehle
+  Um einen Weg bzw einen Knoten zu erstellen, muss der Weg vom Basispunkt oder einem Knoten zu einem neuen Knoten aufgezeichnet und dann gespeichert werden. Dazu gibt es (ab v1.2) zwei Typen von Wegaufzeichnungen mit verschiedenen Vor- und Nachteilen. Im Wesentlichen muss man bei beiden den neuen Weg ablaufen. Dabei kann man die Tasten vom Nummernfeld mit Richtungen belegen und diese zur Navigation benutzen oder die Richtung direkt eingeben. Fuer die Standard-Richtungen wird dies automatisch erkannt, fuer mehr Details, siehe 5.3..
 
-           #wa start
-           #wa stop
-           #wa weiter
- benutzen.
+#### 5.2.1. Wegaufzeichnung Typ 1 (alte Version)
+
+  Bei der ersten/alten Version der Wegaufzeichnung wurde die Eingabe gespeichert und erst beim Raumwechsel der Aufzeichnung hinzugefuegt. Dies hatte den Vorteil, dass man falsche Eingaben nicht korrigieren musste, da diese nicht aufgezeichnet wurde. Ausserdem wird auch automatisch der Rueckweg mitgespeichert! (Sofern zu der Bewegung eine Umkehrung bekannt ist, wie Norden und Sueden etc.)  Ein Nachteil von diesem Typ ist jedoch, dass der Rueckweg korrigiert werden muss, wenn dieser sich wesentlich vom Hinweg unterscheidet.
+
+  Um die Wegaufzeichnung Typ 1 zu steuern, gibt es folgende Befehle:
+
+
+             #wa start
+             #wa stop
+             #wa weiter
+
+  Wie das Argument suggeriert kann man damit die Aufnahme starten, anhalten/beenden und wieder fortsetzen. Allerdings wird beim Fortsetzen geprueft ob man dies im selben Raum tut, wo die Aufnahme angehalten wurde.
+  Man starte also die Wegaufzeichnung, laeuft den Weg von A nach B und anschliessen speichert man diese, wie in 5.7. erklaert wird.
+
+  WICHTIG: Das Beenden der Wegaufzeichnung fuehrt nicht automatisch zum Speichern des Weges. Dies muss anschliessend explizit ausgefuehrt werden, siehe 5.7..
+
+#### 5.2.2. Wegaufzeichnung Typ 2 (ab v1.2)
+
+  Im Gegensatz zum Typ 1 wird bei Typ 2 die Bewegungsaktion nicht erst beim Raumwechsel gespeichert sondern unmittelbar bei der Eingabe. Dies hat den Vorteil, dass man nicht vom Eventhandler abhaengig ist. Allerdings muss man die etwas andere Bedienung beachten. Es gibt dazu folgende Befehle:
+
+
+             #wa2 start
+             #wa2 stop
+             #wa2 weiter
+             #wa2 ziel
+
+  Zuerst wird natuerlich die Aufnahme an einer Stelle A gestartet. Dann laufen wird zum Punkt B. Hier muessen wir nun
+
+             #wa2 ziel
+
+ eingeben und anschliessen den Weg von B nach A laufen. Dann koennen wir die Wegeaufzeichnung beenden und den Weg speichern. Dies hat den Hintergrund, dass beim Typ 2 nicht automatisch der Rueckweg mitgespeichert wird. Dies kann praktisch sein, wenn der Rueckweg sich wesentlich vom Hinweg unterscheidet. So braucht man bei der Wegaufzeichnung Typ 2 den Rueckweg nicht aufwendig korrigieren, sondern laeuft diesen einfach ab. Wichtig ist am Punkt B den obigen Befehl einzugeben.
+ Ausserdem gibt es eine Ausnahme bei der manuellen Eingabe von Bewegungsaktionen, siehe 5.4., denn beim Typ 2 muss auch beim Rueckweg
+
+             #vor <Aktion>
+
+ benutzt werden. Kleines Beispiel:
+
+Wir wollen eine Weg beginnenden bei einem Knoten starten zu einem Haus, bei dem wir auch ordentlich das Haus und die Tuer oeffnen und hinter uns schliessen wollen.
+
+             #wa2 start
+             osten
+             norden
+             nordwesten
+             #vor schliesse haus auf
+             #vor oeffne tuer
+             #vor betrete haus
+             #vor schliesse tuer
+             #vor schliesse haus ab
+             #wa2 ziel     -- wir sind im Haus, hier soll der Weg enden!
+             #vor schliesse haus auf
+             #vor oeffne tuer
+             raus
+             #vor schliesse tuer
+             #vor schliesse haus ab
+             suedosten
+             sueden
+             westen
+             #wa2 stop
+
+ Anschliessend kann der neue Weg gespeichert werden. Ein Nachteil vom Typ 2 ist jedoch, dass nicht geprueft wird, ob eure Eingabe sinnvoll ist oder nicht. Wenn ihr euch vertippt oder vertut, wird dies auch aufgenommen und muss dann rauskorrigiert werden.
+
 
 ### 5.3. Wie wird die Bewegung von der Wegaufzeichnung festgehalten?
 
 In der ersten Version war man gezwungen das Nummerfeld zur Steuerung zu nutzen,
-damit die Wegaufzeichnung die Bewegungn in die Himmelsrichtungen auch speichert.
+damit die Wegaufzeichnung die Bewegung in die Himmelsrichtungen auch speichert.
 Dies wurde ueber das Skript "evented_number_pad" gesteuert. Alle anderen
-Bewegungsaktionen waren manuell hinzuzufuegen, siehe 5.4.
+Bewegungsaktionen mussten manuell hinzuzufuegen werden, siehe 5.4.
 Aber mit Version v1.1 ist es nun moeglich die unten aufgelistete Richtungen
 direkt zu nutzen. Diese werden von der Wegaufzeichnung nun automatisch erkannt.
 Lediglich die Bewegungsaktionen ausserhalb dieser Liste sind manuell, wie in 5.4.,
@@ -223,6 +309,70 @@ ist:
       ob, oben,
       u, unten,
       raus
+
+Ab v1.2 kann diese Liste erweitert werden, siehe dazu 5.3.1., 5.3.2. und 5.3.3..
+
+Ab v1.2 werden auch die Tasten vom Nummerfeld automatisch erkannt, ohne dass ich "evented_number_pad" installiert habt, falls ihr natuerlich die Tasten mit den selben Richtungen belegt habt, naemlich:
+
+      n    = 8
+      no   = 9
+      o    = 6
+      so   = 3
+      s    = 2
+      sw   = 1
+      w    = 4
+      nw   = 7
+      ob   = -
+      u    = +
+      raus = *
+
+Ebenso kann man mit Tastenkombinationen noch Richtungen, wie Nordostoben oder Suedwestunten hinzufuegen, Dies sollte dann in der Form
+
+      Xunten = Strg+Taste fuer X
+      Xoben  = Alt+Taste fuer X
+
+also zum Beispiel:
+
+      nordostoben   = Alt+9
+      suedwestunten = Strg+1
+
+#### 5.3.1 Anzeigen der erkennbaren Bewegung/Aktion (v1.2)
+
+  Da ihr moeglicherweise die in 5.3. beschriebe Liste an automatisch erkennbaren Bewegungsaktionen erweitert habt, wollt ihr vielleicht nachschauen, welche gespeichert wird. Dies ist moeglich mit dem Befehl
+
+             #zeigedir
+
+ Damit werden alle nummeriert aufgelistet.
+
+#### 5.3.2. Hinzufuegen von neuen Bewegung/Aktionen (v1.2)
+
+ Wollt ihr nun eine Bewegungsaktion/Richtung hinzufuegen, die ihr oft benutzt oder fuer wichtig erachtet? Dann kann man das mit
+
+             #adddir <aktion>
+
+ erreichen. Dabei muss die Aktion zwingend aus einem Wort bestehen. Andernfalls muesst ihr leider das manuell eintragen.
+
+ Beispiel:
+
+             #adddir rechts
+
+  Speichert die Richtung "rechts", was dann bei der Wegaufzeichnung automatisch erkannt wird.
+
+#### 5.3.3. Loeschen von Bewegung/Aktion (v1.2)
+
+Wenn ihr euch vertan habt, koennt ihr auch eine gespeicherte Aktion wieder loeschen. Dazu benoetigt ihr aber die Nummer der Aktion, die ihr mit der Anzeige, siehe 5.3.1. erhaltet.
+Der Befehl lautet
+
+             #deldir <nummer>
+
+Jedoch koennt ihr nur Aktionen loeschen, die ihr hinzugefuegt habt. Die Aktionen 1 bis 37 sind Standardrichtungen, die nicht loeschbar sind.
+
+Beispiel:
+
+             #deldir 38
+
+Loescht die 38. gespeicherte Aktion.
+
 
 ### 5.4. Manuell Bewegungsaktion hinzufuegen
 
@@ -382,12 +532,9 @@ Jeder Wege sollte also von naechsten Portel hin und zurueck fuehren. Allerdings 
 dass jeder Weg mit einem Teleport-Befehle zum entsprechenden Portal beginnen muss! Lies dazu noch 8.2., da bei dieser
 speziellen Form Raum-IDs nachgetragen werden muessen.
 
-## 6. Welcher Char nutzt welche Wege? Gemeinsame und unterschiedliche Wege. (on hold)
+## 6. Welcher Char nutzt welche Wege? Gemeinsame und unterschiedliche Wege.
 
-__noch in Bearbeitung__
-Zur Zeit entscheidet der Dateiname im Skript-Element Core darueber welche Wege
-genutzt werden. Fuer die naechste Version ist vorgesehen Wege zwischen Dateien
-hin und her zu kopieren.
+Im Skript-Element Core ist mit dem Dateinamen festgehalten aus welcher Datei die Wege bezogen werden. Wenn ihr also mehrere Profile anlegt und bei allem das Skript installiert, dann wird natuerlich bei allen Profilen der selbe Dateiname stehen und damit greifen alle Profile auf die selben Wege zurueck. Ich empfehle aber Wege fuer Seher und Nichtseher-Profile zu unterscheiden. Legt fuer Nichtseher-Profile eine eigene Datei an indem ihr dies im Code aendert. Damit muesst ihr im Skript-Element Core den Namen bei filename aendern. Fuer die Zukunft plane ich dies mit ein Verwaltungssystem, welches im Spiel steuerbar ist, zu vereinfachen.
 
 ## 7. Reisen mit dem Wegeskript
 
@@ -618,20 +765,37 @@ Standardmaessig ist der Modus eingeschaltet. Man kann dies bei Skripte im Elemen
 
 ## 13. Raummeldungen entlang des Weges weggaggen (ab v1.1)
 
-  Reist man mit dem Wegeskript, so geschieht dies im ultakurz-Modus, damit
-  nicht die ganzen Raumbeschreibungen das Spiel und somit auch den Log
-  vollscrollen. Jedoch wurden weiterhin Leerzeilen fuer jeden Raum erzeugt.
-  Des Weiteren wurden Raummeldungen trotzdem angezeigt. Dies ist unschoen
-  und kann ab Version v1.1 nun entfernt werden! Ich habe schonmal ein Paar
-  Meldungen eingestellt, die beim Reisen unterbunden werden sollen, aber ihr
-  koennt diese Liste gerne erweitern. Noch muesst ihr das im Code selbst tun,
-  aber ich plane fuer die naechste Version, dass dies auch ueber eine
-  externe Datei laufen soll, damit auch mehrere Profile auf die zu unterbindenden
-  Texte zugreifen koennen. Nun macht ihr es zunaechst wie folgt:
-  1. Oeffnet den Skripteditor.
-  2. Waehlt das Element "Core" aus.
-  3. Ab Zeile 82 wird die Tabelle stehen mit den zu unterbindenden Texten.
-     Fuegt dieser Liste weitere Texte zu.
+  Reist man mit dem Wegeskript, so geschieht dies im ultakurz-Modus, damit nicht die ganzen Raumbeschreibungen das Spiel und somit auch den Log vollscrollen. Jedoch wurden weiterhin Leerzeilen fuer jeden Raum erzeugt. Des Weiteren wurden Raummeldungen trotzdem angezeigt. Dies ist unschoen und kann ab Version v1.1 nun entfernt werden! Ich habe schonmal ein Paar Meldungen eingestellt, die beim Reisen unterbunden werden sollen, aber ab v1.2 koennt ihr diese Liste nach eigenem Ermessen modizifieren! Dazu die folgenden Unterpunkte:
+
+### 13.1. Anzeigen der Gags (v1.2)
+
+  Mit dem Befehl
+
+           #zeigegags
+
+ koennt ihr euch anzeigen lasse welche Texte erkannt und dann die ganze Zeilen beim Laufen geloescht wird.
+
+### 13.2. Hinzufuegen von Gags (v1.2)
+
+ Mit dem Befehl
+
+           #addgag <text>
+
+koennt ihr die Liste aus 13. erweitern. Beachtet, dass eine ganze Zeile geloescht wird, wenn der Text in dieser _enthalten_ ist.
+
+Beispiel:
+
+           #addgag Einhorn
+
+Damit wird der Text _Einhorn_ hinzugefuegt. Wenn also beim Laufen eine Raummeldung das Wort Einhorn enthaelt, wird diese Zeile geloescht.
+
+### 13.3. Loeschen von Gags (v1.2)
+
+Mit dem Befehle
+
+           #delgag <nummer>
+
+koennt ihr wieder einen Text aus der Liste loeschen. Dazu muss man die Nummer angeben, die der Anzeige, siehe 13.1., angegeben wird.
 
 ## 14. Hilfefunktion im Spiel (ab v1.1)
 
